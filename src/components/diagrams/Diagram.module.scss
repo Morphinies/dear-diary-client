@@ -1,0 +1,19 @@
+@import '../../style/const.scss';
+
+.pie {
+  transition: $trans;
+  *:focus {
+    outline: none;
+  }
+}
+
+.axis {
+  text {
+    fill: #fff;
+  }
+}
+
+.barChart {
+  margin-top: 2rem;
+  max-height: 350px;
+}

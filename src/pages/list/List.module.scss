@@ -1,0 +1,28 @@
+@import '../../style/const.scss';
+
+.inputList {
+  gap: 1rem;
+  display: flex;
+  margin-top: 2rem;
+  flex-direction: column;
+}
+
+.listSettings {
+  @extend .pageSettings;
+}
+
+.listWrap {
+  flex: 1;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 2rem;
+  min-height: 2.5rem;
+}
+
+.list {
+  flex: 1;
+}

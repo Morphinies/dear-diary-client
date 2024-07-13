@@ -1,0 +1,80 @@
+@import '../../style/const.scss';
+
+// popup
+.notesPopupContent {
+  gap: 1rem;
+  display: flex;
+  height: 70dvh;
+  overflow: hidden;
+  padding-top: 1rem;
+  flex-direction: column;
+}
+// popup end
+
+.list {
+  flex: 1;
+  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  .notesListLoader {
+    height: auto;
+    div {
+      top: 30%;
+    }
+  }
+}
+.notesMain {
+  flex: 1;
+  display: flex;
+  position: relative;
+}
+
+.notesList {
+  width: 100%;
+  gap: 0.5rem;
+  display: grid;
+  align-self: flex-start;
+  // grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
+  grid-template-columns: repeat(4, 1fr);
+  .noteItem {
+    gap: 1rem;
+    height: 200px;
+    display: flex;
+    padding: 1rem;
+    cursor: pointer;
+    border-radius: $rad;
+    flex-direction: column;
+    border: 1px solid var(--font-color-transp);
+    @extend .lightBlock;
+  }
+  .btnAdd {
+    align-items: center;
+    justify-content: center;
+    svg {
+      width: 40%;
+    }
+    path {
+      transition: $trans;
+      stroke: var(--font-color-transp);
+    }
+  }
+  .title {
+    font-size: 1.1rem;
+    transition: $trans;
+    color: var(--font-color-transp);
+  }
+}
+
+@media (hover) {
+  .notesList {
+    .noteItem:hover {
+      border-color: var(--font-color);
+      .title {
+        color: var(--font-color);
+      }
+      path {
+        stroke: var(--font-color);
+      }
+    }
+  }
+}

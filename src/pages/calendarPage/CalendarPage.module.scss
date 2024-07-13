@@ -1,0 +1,52 @@
+@import '../../style/const.scss';
+
+.calendar {
+  margin-top: 2rem;
+}
+
+.form {
+  width: 100%;
+  gap: 0.5rem;
+  display: flex;
+}
+
+.noteList {
+  flex: 1;
+  gap: 0.25rem;
+  display: flex;
+  overflow: auto;
+  max-height: 100%;
+  flex-direction: column;
+  @extend .scroll;
+}
+
+.noteNumb {
+  min-width: 30px;
+}
+
+.noteItem {
+  gap: 1rem;
+  display: flex;
+  font-size: 1.1rem;
+  list-style: inside;
+  transition: $trans;
+  border-radius: $rad;
+  align-items: center;
+  margin-right: 0.5rem;
+  padding-left: 0.5rem;
+  list-style-type: decimal;
+  input {
+    padding: 0;
+    border: none;
+  }
+}
+
+.inputWrap {
+  width: 100%;
+}
+
+@media (hover) {
+  .noteItem:hover {
+    background-color: #ffffff30;
+  }
+}

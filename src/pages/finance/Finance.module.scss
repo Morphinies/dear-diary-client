@@ -1,0 +1,342 @@
+@import '../../style/const.scss';
+
+$colors: (
+  1: var(--1),
+  2: var(--2),
+  3: var(--3),
+  4: var(--4),
+  5: var(--5),
+  6: var(--6),
+  7: var(--7),
+  8: var(--8),
+);
+
+.finance {
+  // margin-bottom: 300px;
+  margin-bottom: 50px;
+}
+
+.main {
+  gap: 2rem;
+  display: grid;
+  margin-top: 2rem;
+  grid-template-columns: 0.4fr 0.6fr;
+}
+
+.trans,
+.transListWrap {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.transListWrap {
+  flex: 1;
+}
+
+.transList {
+  flex: 1;
+  gap: 0.5rem;
+  display: flex;
+  // height: 370px;
+  overflow-y: auto;
+  min-height: 506px;
+  max-height: 506px;
+  border-radius: $rad;
+  flex-direction: column;
+  border: 1px solid var(--transp-x3);
+  background-color: var(--transp-x3);
+
+  @extend .scroll;
+}
+
+.transItem:first-child {
+  margin-top: auto;
+}
+
+.transItem {
+  gap: 1rem;
+  display: flex;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: $trans;
+  justify-content: space-between;
+  border-left: 2px solid var(--font-color-transp);
+}
+.transItemRight,
+.transItemLeft {
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  .secondary {
+    color: var(--font-color-transp);
+  }
+}
+
+.transItemRight {
+  align-items: flex-end;
+}
+
+.settingsSelectList {
+  right: auto;
+  min-width: 100%;
+}
+
+.transSelect {
+  flex: 1;
+  &:hover button,
+  button {
+    border-color: var(--transp-x3);
+  }
+}
+
+.inputTransDate {
+  div {
+    border-color: var(--transp-x3);
+  }
+}
+
+.transFilter,
+.transSettings {
+  gap: 0.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.transFilter {
+  height: 0;
+  overflow: hidden;
+  transition: $trans;
+  &.opened {
+    overflow: visible;
+  }
+}
+
+.transFormWrap {
+  transition: $slowTrans;
+}
+
+.transForm {
+  height: 0;
+  gap: 0.5rem;
+  display: flex;
+  overflow: hidden;
+  transition: $trans;
+  flex-direction: column;
+  // animation: $appearance;
+}
+
+.btnOpenFilter,
+.btnSwitchChapter {
+  display: block;
+  margin: 0 auto;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  color: var(--font-color-transp);
+}
+
+.btnOpenFilter {
+  margin-top: 0;
+}
+
+.btnAddTrans {
+  width: 100%;
+  transition: $trans;
+  justify-content: center;
+  // animation: $appearance;
+}
+
+.btnAddTransWrap {
+  overflow: hidden;
+}
+
+.transInputMid,
+.transInputTop {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.transDescInput {
+  div {
+    border-color: var(--transp-x3);
+  }
+}
+
+.transInput {
+  flex: 1;
+  div {
+    border-color: var(--transp-x3);
+  }
+}
+
+.popupAddCategoryContent {
+  gap: 1rem;
+  display: flex;
+  margin-top: 1rem;
+}
+.transCatInput {
+  flex: 1;
+}
+
+.barChart,
+.pieChart {
+  height: 500px;
+}
+
+.emptyList {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  svg {
+    width: 4rem;
+    height: auto;
+  }
+  p {
+    color: var(--font-color-transp);
+  }
+}
+
+.financeSettings {
+  @extend .pageSettings;
+  justify-content: space-between;
+  .finSelectSortList {
+    right: 0;
+  }
+  .left,
+  .right {
+    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.selectSwitcher {
+  button {
+    border: none;
+    padding: 0.5rem;
+    border-radius: 0;
+    background: none;
+    min-height: auto;
+    font-size: 0.875rem;
+    justify-content: center;
+    border-bottom: 1px solid var(--font-color-transp) !important;
+  }
+}
+
+.finTransPopupForm {
+  gap: 0.5rem;
+  display: flex;
+  margin-top: 2rem;
+  flex-direction: column;
+}
+
+// transPeriod
+.transPeriod {
+  display: flex;
+  min-height: 85px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.transPeriodTitleWrap {
+  gap: 2rem;
+  display: flex;
+  margin-top: 1rem;
+  min-width: 270px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// .transPeriodTitle {
+// }
+
+.secondary {
+  color: var(--font-color-transp);
+}
+
+// summary
+
+.summary {
+}
+
+.summary,
+.summaryList {
+  gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.summaryItem {
+  gap: 2rem;
+  width: 100%;
+  display: grid;
+  cursor: default;
+  transition: $trans;
+  position: relative;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid transparent;
+  p:first-child,
+  h3:first-child {
+    justify-self: flex-start;
+  }
+  p:last-child,
+  h3:last-child {
+    justify-self: flex-end;
+  }
+  .circle {
+    width: 1rem;
+    left: -2rem;
+    height: 1rem;
+    position: absolute;
+    border-radius: 100px;
+  }
+  &.summaryTotal {
+    border-color: var(--font-color);
+  }
+}
+
+// pie chart
+.summaryList {
+  .summaryItem:not(.summaryTotal) {
+    @each $index, $color in $colors {
+      &:nth-child(#{$index + 1}) {
+        .circle {
+          background-color: $color;
+        }
+      }
+    }
+  }
+}
+
+// summary end
+
+// statistic
+
+.statistic {
+  margin-top: 4rem;
+}
+
+@media (hover) {
+  .transItem:hover {
+    border-color: var(--primary);
+    background-color: var(--transp);
+  }
+  .btnOpenFilter:hover,
+  .btnSwitchChapter:hover {
+    color: var(--font-color);
+  }
+
+  .summaryItem:not(.summaryTotal):hover {
+    border-color: var(--font-color-transp);
+  }
+
+  .selectSwitcher:hover {
+    button {
+      border-bottom: 1px solid var(--font-color-transp) !important;
+    }
+  }
+}

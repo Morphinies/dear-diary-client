@@ -1,0 +1,187 @@
+@import '../../style/const.scss';
+
+.menu {
+  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.menuChapter {
+  hr {
+    margin-bottom: 1rem;
+  }
+}
+
+.serviceList {
+  gap: 0.5rem;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(4, 1fr);
+  .service {
+    color: var(--font-color-transp);
+  }
+}
+
+.service {
+  gap: 1rem;
+  display: flex;
+  height: 200px;
+  padding: 1.5rem;
+  transition: $trans;
+  position: relative;
+  align-items: center;
+  border-radius: $rad;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid var(--font-color-transp);
+  @extend .lightBlock;
+  &.add svg {
+    max-width: 50%;
+    max-height: 50%;
+  }
+}
+
+.iconWrap {
+  flex: 1;
+  width: 150px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img,
+  svg {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  path {
+    transition: $trans;
+    stroke: var(--font-color-transp);
+  }
+}
+
+// .addListPopupContent {
+//   gap: 1rem;
+//   display: flex;
+//   margin-top: 1rem;
+//   flex-direction: column;
+//   .label {
+//     display: block;
+//     margin-bottom: 0.25rem;
+//     color: var(--font-color-transp);
+//   }
+// }
+
+.formEditMenuList {
+  gap: 1rem;
+  display: flex;
+  margin-top: 1rem;
+  flex-direction: column;
+  .label {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: var(--font-color-transp);
+  }
+}
+
+.formChooseMenuType {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  .menuTypeBtn {
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: var(--font-color-transp);
+  }
+  .menuTypeIconWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      width: 4rem;
+      height: 4rem;
+      object-fit: contain;
+    }
+  }
+}
+.iconStroke {
+  path {
+    transition: $trans;
+    stroke: var(--font-color-transp);
+  }
+}
+
+.iconFill {
+  path {
+    transition: $trans;
+    fill: var(--font-color-transp);
+  }
+}
+
+.btnEdit {
+  top: 0;
+  right: 0;
+  opacity: 0;
+  width: 2rem;
+  height: 2rem;
+  padding: 0.1rem;
+  position: absolute;
+  polygon,
+  path {
+    stroke: var(--font-color-transp);
+  }
+}
+
+.checkboxList {
+  gap: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.editMenuItemPopup {
+  gap: 1rem;
+}
+
+.formEditMenu {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (hover) {
+  .serviceList .service:hover {
+    color: var(--font-color);
+  }
+  .service:hover {
+    border-color: var(--font-color);
+    .btnEdit {
+      opacity: 1;
+    }
+  }
+  .btnEdit:hover {
+    polygon,
+    path {
+      stroke: var(--font-color);
+    }
+  }
+
+  .formChooseMenuType {
+    .menuTypeBtn:hover {
+      color: var(--font-color);
+      .iconStroke {
+        path {
+          stroke: var(--font-color);
+        }
+      }
+
+      .iconFill {
+        path {
+          fill: var(--font-color);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+const fixBody = (fix = false) => {
+  const body = document.querySelector('body');
+  if (fix) {
+    body.style.maxHeight = '100vh';
+    body.style.overflowY = 'hidden';
+  } else {
+    body.style.maxHeight = 'auto';
+    body.style.overflowY = 'auto';
+  }
+};
+
+export default fixBody;

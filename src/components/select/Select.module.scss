@@ -1,0 +1,231 @@
+@import '../../style/const.scss';
+
+.selectBlock,
+.select {
+  position: relative;
+  border-radius: $rad;
+  color: var(--font-color-transp);
+}
+.listWrap {
+  left: 0;
+  right: 0;
+  height: 0;
+  min-width: 100%;
+  overflow: hidden;
+  transition: $trans;
+  position: absolute;
+  border-radius: $rad;
+  border: 1px solid transparent;
+}
+.list {
+  margin: 4px 2px;
+  overflow-y: auto;
+  max-height: 200px;
+  padding-right: 2px;
+  padding-left: 2px;
+  @extend .scroll;
+}
+.item,
+.selected {
+  width: 100%;
+  font-weight: 500;
+  text-align: left;
+  padding: 0.75rem 1.5rem;
+  @extend .lightBlock;
+}
+.item {
+  cursor: pointer;
+  transition: $trans;
+  border-radius: $rad;
+  padding: 0.5rem 0.75rem;
+  color: var(--font-color-transp);
+  &.active {
+    color: var(--primary-transp);
+  }
+  &:active:not(.active) {
+    color: var(--font-color);
+  }
+  &.icon {
+    padding: 0.25rem 0.75rem;
+  }
+  &.color {
+    margin-top: 0.2rem;
+    color: transparent;
+    border: 4px outset var(--main-color);
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  &.active.color {
+    border-color: var(--primary);
+    // filter: brightness(1.1);
+  }
+}
+.selected {
+  @extend .btn;
+  color: var(--font-color-transp);
+  border-color: var(--transp-x3);
+  justify-content: space-between;
+  &.icon {
+    padding: 0.25rem 0.75rem;
+  }
+}
+.arrow {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+  svg {
+    width: 100%;
+    height: 100%;
+    transition: $trans;
+  }
+}
+.opened {
+  &.sort {
+    .selected {
+      color: var(--font-color);
+      border-color: var(--transp);
+      path {
+        fill: none;
+        stroke: var(--font-color);
+      }
+    }
+  }
+  .selected {
+    color: var(--font-color);
+    backdrop-filter: blur(10px);
+    border-color: var(--transp);
+    background-color: var(--transp-x2);
+  }
+  .arrow {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+  .listWrap {
+    z-index: 99;
+    margin-top: 10px;
+    backdrop-filter: blur(10px);
+    border-color: var(--transp);
+    background-color: var(--transp-x3);
+  }
+}
+
+.sort {
+  .selected {
+    path {
+      fill: var(--font-color-transp);
+    }
+    color: var(--font-color-transp);
+    border-color: var(--transp-x3);
+  }
+}
+.topLabel {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--font-color);
+}
+//
+.selectBlock {
+  right: 0;
+  .item {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.2rem;
+    &:first-child {
+      margin-top: 0;
+    }
+    svg {
+      width: 1.6rem;
+      height: 1.6rem;
+    }
+    path {
+      transition: $trans;
+      fill: var(--font-color-transp);
+    }
+  }
+}
+
+.paletteIcon {
+  path {
+    fill: none;
+  }
+}
+
+.selectIcon {
+  display: flex;
+}
+
+.btnAdd {
+  @extend .btn;
+  margin: 0.25rem;
+  min-height: auto;
+  padding: 0.25rem 0.75rem;
+  width: calc(100% - 0.5rem);
+  justify-content: space-between;
+}
+
+@media (hover) {
+  .selected:hover {
+    border-color: var(--transp);
+  }
+  .opened .selected:hover {
+    border-color: var(--transp);
+  }
+  .btnAdd:hover {
+    border-color: var(--transp) !important;
+  }
+  // .sort .selected:hover {
+  //   color: var(--font-color-transp);
+  //   border-color: var(--transp);
+  //   path {
+  //     fill: var(--font-color-transp);
+  //     stroke: var(--font-color-transp);
+  //   }
+  // }
+  .sort .selected:hover {
+    color: var(--font-color);
+    border-color: var(--transp);
+    path {
+      fill: var(--font-color);
+      stroke: var(--font-color);
+    }
+  }
+  .item {
+    &:hover,
+    &:active {
+      background-color: var(--transp-x2) !important;
+    }
+    &:hover:not(.active),
+    &:active:not(.active) {
+      color: var(--font-color);
+    }
+    &.active {
+      &:hover,
+      &:active {
+        color: var(--primary);
+      }
+    }
+    &.color {
+      &:hover,
+      &:active {
+        color: transparent;
+        filter: brightness(1.25);
+      }
+    }
+  }
+
+  .selectBlock {
+    .item:hover {
+      path {
+        fill: var(--font-color);
+      }
+    }
+  }
+  .paletteSelect:hover .paletteIcon,
+  .paletteSelect:active .paletteIcon {
+    path {
+      fill: none;
+    }
+  }
+}

@@ -1,0 +1,124 @@
+@import '../../style/const.scss';
+
+.calendarWrap {
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.sort {
+  gap: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.calendar {
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.table,
+.tableHead {
+  display: grid;
+  border-radius: $rad;
+  grid-template-columns: repeat(7, minmax(100px, 1fr));
+}
+
+.tableHead {
+  border: 1px solid var(--font-color-transp);
+}
+
+.table {
+  gap: 1px;
+  border: 1px solid var(--font-color-transp);
+}
+
+.cellHeader,
+.cell {
+  cursor: pointer;
+  transition: $trans;
+  color: var(--font-color-transp);
+  @extend .lightBlock;
+}
+
+.cell {
+  display: flex;
+  padding: 0.25rem;
+  min-height: 5rem;
+  align-items: flex-start;
+  border: 2px solid transparent;
+  justify-content: space-between;
+}
+
+.cellHeader {
+  display: flex;
+  padding: 0.75rem;
+  font-weight: 500;
+  font-size: 1.1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell.empty {
+  cursor: default;
+}
+
+.cellHeader.activeColumn,
+.cell.activeColumn {
+  color: var(--font-color);
+  background-color: var(--transp);
+}
+
+.cell.active {
+  margin: -1px;
+  border-color: var(--primary) !important;
+}
+
+.selectMonth {
+  min-width: 130px;
+}
+
+.selectYear {
+  min-width: 90px;
+}
+
+.cellHeader:first-child,
+.cell:first-child {
+  border-top-left-radius: $rad;
+}
+.cellHeader:nth-child(7),
+.cell:nth-child(7) {
+  border-top-right-radius: $rad;
+}
+.cellHeader:last-child,
+.cell:last-child {
+  border-bottom-right-radius: $rad;
+}
+.cellHeader:first-child {
+  border-bottom-left-radius: $rad;
+}
+.cell:nth-child(36) {
+  border-bottom-left-radius: $rad;
+}
+
+// .btnReset {
+// }
+
+// notes
+
+.notesMark {
+  padding: 0.25rem;
+  border-radius: $rad;
+  background-color: var(--primary);
+}
+
+@media (hover) {
+  .cell,
+  .cellHeader {
+    &:active,
+    &:hover {
+      color: var(--font-color);
+    }
+  }
+}

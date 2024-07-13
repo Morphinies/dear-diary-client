@@ -1,0 +1,107 @@
+@import '../../style/const.scss';
+
+.header {
+  gap: 1rem;
+  @extend .row;
+  padding: 1rem 0;
+  justify-content: space-between;
+}
+
+.leftBtns {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.headerMenuWrap {
+  @extend .row;
+  grid-column-end: 3;
+  border-radius: $rad;
+  grid-column-start: 2;
+  transition: $slowTrans;
+  justify-content: flex-start;
+}
+
+.headerMenu {
+  width: 0;
+  opacity: 0;
+  gap: 0.5rem;
+  @extend .row;
+  overflow: hidden;
+  transition: $slowTrans;
+  a {
+    @extend .btn;
+  }
+  a.active {
+    @extend .btnOpened;
+  }
+  &.opened {
+    opacity: 1;
+    overflow: visible;
+    animation: 1s 1 alternate onVisible;
+  }
+}
+
+.btnMenu {
+  &.opened {
+    @extend .btnOpened;
+    svg {
+      opacity: 1;
+      padding: 0.2rem;
+      animation: 0.5s 1 alternate rotationClose;
+    }
+  }
+  &.closed {
+    svg {
+      opacity: 1;
+      animation: 0.5s 1 alternate rotationOpen;
+    }
+  }
+}
+
+// .btnSettings {
+//   svg {
+//   }
+// }
+
+.btnHomeWrapActive,
+.btnSettingsWrapActive {
+  button {
+    @extend .btnOpened;
+  }
+}
+
+.btnHome {
+  path {
+    fill: none !important;
+  }
+}
+
+@keyframes rotationOpen {
+  from {
+    transform: rotate(180deg) scale(0.5);
+  }
+  to {
+    transform: rotate(0) scale(1);
+  }
+}
+
+@keyframes rotationClose {
+  from {
+    transform: rotate(-180deg) scale(0.5);
+  }
+  to {
+    transform: rotate(0) scale(1);
+  }
+}
+
+@keyframes onVisible {
+  from {
+    overflow: hidden;
+  }
+  to {
+    overflow: visible;
+  }
+}
+
+@media (hover) {
+}

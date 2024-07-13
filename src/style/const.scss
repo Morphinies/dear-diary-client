@@ -1,0 +1,223 @@
+$mainColor: #81ecec;
+$lightColor: #fff;
+$darkColor: #242424;
+
+$trans: all 0.15s ease-in-out;
+$slowTrans: all 0.3s ease-in-out;
+$fastTrans: all 0.05s ease-in-out;
+
+$rad: 5px;
+
+$important1: #ff5252;
+$important2: #0bb2ff;
+$important3: #86ff5e;
+
+$important1Transp: #ff52521b;
+$important2Transp: #0bb2ff1b;
+$important3Transp: #86ff5e1b;
+
+$boxShadow: 0 0 10px 2px #ffffff60;
+
+$appearance: 1s 1 alternate appearance;
+
+@keyframes appearance {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn {
+  gap: 0.5rem;
+  display: flex;
+  font-weight: 500;
+  min-height: 44px;
+  transition: $trans;
+  width: max-content;
+  border-radius: $rad;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  color: var(--font-color-transp);
+  border: 1px solid var(--transp-x3);
+  svg {
+    width: 1.6rem;
+    height: 1.6rem;
+    transition: $trans;
+    stroke: var(--font-color-transp);
+  }
+  polygon,
+  path {
+    transition: $trans;
+    fill: var(--font-color-transp);
+    stroke: var(--font-color-transp);
+  }
+  &:active {
+    border-color: var(--font-color);
+    color: var(--font-color);
+    polygon,
+    path {
+      fill: var(--font-color);
+      stroke: var(--font-color);
+    }
+    svg {
+      stroke: var(--font-color);
+    }
+  }
+}
+
+.btnOpened {
+  color: var(--primary-transp);
+  border-color: var(--primary-transp);
+  path {
+    fill: var(--primary-transp);
+    stroke: var(--primary-transp);
+  }
+  &:active {
+    color: var(--primary);
+    border-color: var(--primary);
+    path {
+      fill: var(--primary);
+      stroke: var(--primary);
+    }
+  }
+}
+
+.btnRed,
+.btnBlue,
+.btnGreen {
+  polygon,
+  path {
+    transition: $trans;
+  }
+}
+
+.btnRed:active {
+  polygon,
+  path {
+    stroke: $important1;
+  }
+}
+
+.btnBlue:active {
+  polygon,
+  path {
+    stroke: rgb(24, 186, 255);
+  }
+}
+
+.btnGreen:active {
+  polygon,
+  path {
+    stroke: rgb(3, 210, 3);
+  }
+}
+
+// for dark theme
+.inputWrap {
+}
+
+.scroll {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    // background-color: var(--font-color);
+    background-color: var(--grey-color);
+  }
+  &::-webkit-scrollbar-thumb {
+    cursor: grab;
+    border-radius: 10px;
+    background-color: var(--primary);
+    // box-shadow: inset 0 0 6px var(--primary);
+    &:active {
+      cursor: grabbing;
+    }
+  }
+}
+
+.pageSettings {
+  gap: 0.5rem;
+  display: flex;
+  // margin-top: 2rem;
+  align-items: center;
+  .selectSortList {
+    right: auto;
+  }
+}
+
+.lightBlock {
+  transition: $trans;
+  background-color: var(--transp-x3);
+}
+
+@media (hover) {
+  .btn:active,
+  .btn:hover {
+    color: var(--font-color);
+    border-color: var(--transp);
+    polygon,
+    path {
+      fill: var(--font-color);
+      stroke: var(--font-color);
+    }
+    svg {
+      stroke: var(--font-color);
+    }
+  }
+  .btnOpened {
+    &:hover,
+    &:active {
+      color: var(--primary);
+      border-color: var(--primary);
+      polygon,
+      path {
+        fill: var(--primary);
+        stroke: var(--primary);
+      }
+      svg {
+        stroke: var(--primary);
+      }
+    }
+  }
+  .inputWrap {
+    button:hover {
+      path {
+        stroke: $lightColor;
+      }
+    }
+  }
+  .btnRed:hover {
+    polygon,
+    path {
+      stroke: $important1;
+    }
+  }
+  .btnBlue:hover {
+    polygon,
+    path {
+      stroke: rgb(24, 186, 255);
+    }
+  }
+  .btnGreen:hover {
+    polygon,
+    path {
+      stroke: rgb(3, 210, 3);
+    }
+  }
+  .lightBlock:hover {
+    background-color: var(--transp-x2);
+  }
+}

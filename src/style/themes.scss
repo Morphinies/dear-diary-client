@@ -1,0 +1,113 @@
+[theme='light'],
+:root {
+  --primary: #2e86de;
+  --main-color: #ffeaa7;
+  --sec-color: #fff;
+  --font-color: #242424;
+  --font-color-transp2: #2424241b;
+  --font-color-transp3: #2424242a;
+  --font-color-transp4: #2424243a;
+}
+
+// [theme='blue'] {
+//   --primary: #2e86de;
+//   --main-color: #81ecec;
+//   --sec-color: #fff;
+//   --font-color: #242424;
+//   --font-color-transp2: #2424241b;
+//   --font-color-transp3: #2424242a;
+//   --font-color-transp4: #2424243a;
+// }
+
+[theme='dark'] {
+  --primary: #2e86de;
+  // --primary: #00fbff;
+  --primary-transp: #2e86debb;
+  // --main-color: #101010;
+  --main-color: #131313;
+  // --main-color-transp: #10101030;
+  --main-color-transp: #13131330;
+  --sec-color: #81ecec;
+  --font-color: #fff;
+  --grey-color: #eeeeee;
+  --font-color-transp: #bbbbbb;
+  --transp: #ffffff30;
+  --transp-x2: #ffffff15;
+  --transp-x3: #ffffff10;
+}
+
+// body-bg-patterns
+
+[bgPattern='-'] {
+  --bg-pattern: none;
+}
+
+[bgPattern='diamond'] {
+  --bg-pattern: url('../assets/bgPatterns/diamond.svg');
+}
+
+[bgPattern='skull'] {
+  --bg-pattern: url('../assets/bgPatterns/skull.svg');
+}
+
+[bgPattern='circuit-board'] {
+  --bg-pattern: url('../assets/bgPatterns/circuit-board.svg');
+}
+
+[bgPattern='tic-tac-toe'] {
+  --bg-pattern: url('../assets/bgPatterns/tic-tac-toe.svg');
+}
+
+[bgPattern='floating-cogs'] {
+  --bg-pattern: url('../assets/bgPatterns/floating-cogs.svg');
+}
+
+[bgPattern='i-like-food'] {
+  --bg-pattern: url('../assets/bgPatterns/i-like-food.svg');
+}
+
+// diagram-themes
+
+[diagram-theme='A'] {
+  --1: #003f5c;
+  --2: #2f4b7c;
+  --3: #665191;
+  --4: #a05195;
+  --5: #d45087;
+  --6: #f95d6a;
+  --7: #ff7c43;
+  --8: #ffa600;
+}
+
+[diagram-theme='B'] {
+  --1: #a7414a;
+  --2: #282726;
+  --3: #6a8a82;
+  --4: #a37c27;
+  --5: #563838;
+  --6: #5427a3;
+  --7: #a32776;
+  --8: #76a327;
+}
+
+[diagram-theme='C'] {
+  --1: #5c0000;
+  --2: #7a1033;
+  --3: #8b3066;
+  --4: #8b5398;
+  --5: #7a77c4;
+  --6: #599ae5;
+  --7: #24bcf9;
+  --8: #00dbff;
+}
+
+[diagram-theme='D'] {
+  --1: #695c47;
+  --2: #8d7d60;
+  --3: #b29f7a;
+  --4: #d8c395;
+  --5: #ffe8b1;
+  --6: #e0b786;
+  --7: #c08863;
+  --8: #782f2f;
+}

@@ -1,0 +1,35 @@
+@import '../../style/const.scss';
+
+.form {
+  gap: 1.5rem;
+  display: flex;
+  margin-top: 2rem;
+  flex-direction: column;
+}
+
+.popupWindow {
+  max-width: 500px !important;
+}
+
+.btnSubmitWrap {
+  display: flex;
+  position: relative;
+  align-items: center;
+  flex-direction: column;
+  .btnSubmit {
+    margin: 0 auto;
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+  .error {
+    text-align: center;
+    font-size: 0.75rem;
+    color: $important1;
+    position: absolute;
+    bottom: calc(100% + 2px);
+  }
+}
+
+.confirmMes {
+  margin-top: 2rem;
+}

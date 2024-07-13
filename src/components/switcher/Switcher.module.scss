@@ -1,0 +1,22 @@
+@import '../../style/const.scss';
+
+.switcher {
+  width: 100%;
+  display: flex;
+  &.mini {
+    .item {
+      font-size: 0.875rem;
+      padding: 0.5rem;
+    }
+  }
+}
+.item {
+  width: 100%;
+  padding: 0.75rem;
+  color: var(--font-color-transp);
+  border-bottom: 1px solid var(--font-color-transp);
+  &.active {
+    color: var(--font-color);
+    border-color: var(--font-color);
+  }
+}

@@ -1,0 +1,38 @@
+@import '../../style/const.scss';
+
+.btn {
+  @extend .btn;
+  @extend .lightBlock;
+  &.withIcon {
+    padding: 0.5rem;
+  }
+}
+
+.btnDraggable {
+  cursor: grab;
+  display: flex;
+  flex-shrink: 0;
+  padding: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  &:active {
+    cursor: grabbing;
+  }
+  svg {
+    width: 1.75rem;
+    height: 1.75rem;
+    transition: $fastTrans;
+    stroke: var(--font-color-transp);
+  }
+}
+
+@media (hover) {
+  .btnDraggable {
+    &:active,
+    &:hover {
+      svg {
+        stroke: var(--font-color);
+      }
+    }
+  }
+}

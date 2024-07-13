@@ -1,0 +1,207 @@
+@import '../../style/const.scss';
+
+.listWrap.contentCenter {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+
+.list {
+  overflow: hidden;
+  border-radius: $rad;
+  border: 1px solid transparent;
+  transition: all 0.5s ease-in-out;
+  background-color: var(--font-color-transp-x2);
+  button {
+    border: none;
+    background-color: transparent;
+  }
+  &.load {
+    pointer-events: none;
+  }
+  li {
+    gap: 1rem;
+    display: flex;
+    cursor: default;
+    box-shadow: none;
+    align-items: center;
+    color: var(--font-color-transp);
+    border-left: 4px solid transparent;
+    @extend .lightBlock;
+  }
+  li[data-color-id='1'] {
+    border-color: $important1;
+    &:active {
+      background-color: $important1Transp;
+    }
+  }
+  li[data-color-id='2'] {
+    border-color: $important2;
+    &:active {
+      background-color: $important2Transp;
+    }
+  }
+  li[data-color-id='3'] {
+    border-color: $important3;
+    &:active {
+      background-color: $important3Transp;
+    }
+  }
+}
+
+.list:not(.withHandleSort) {
+  .btnDraggable {
+    display: none;
+  }
+  .item {
+    padding-left: 1rem;
+  }
+}
+
+.text {
+  flex: 1;
+}
+
+.time {
+  flex-shrink: 0;
+}
+
+.btnEdit {
+  svg {
+    padding: 2px;
+  }
+}
+
+.btnToggleList {
+  justify-self: flex-end;
+}
+
+.btnMenu svg {
+  padding: 0.2rem;
+}
+
+.btnChecked,
+.btnArchive {
+  svg {
+    padding-top: 0.15rem;
+  }
+}
+
+.btnDel,
+.btnEdit,
+.btnChecked,
+.btnArchive {
+  polygon,
+  path {
+    fill: none;
+    transition: $fastTrans;
+  }
+  &:active {
+    polygon,
+    path {
+      fill: none;
+    }
+  }
+}
+
+.itemMenu {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  display: flex;
+  overflow: hidden;
+  transition: $slowTrans;
+  &.opened {
+    width: 100%;
+    height: 100%;
+    opacity: 100%;
+  }
+  &__wrap {
+    justify-content: flex-end;
+  }
+}
+
+@media (hover) {
+  .list {
+    button:hover {
+      background-color: transparent;
+    }
+  }
+  .itemMenu {
+    width: 100%;
+    height: 100%;
+    transition: $fastTrans;
+  }
+  .btnDel,
+  .btnEdit,
+  .btnChecked,
+  .btnArchive {
+    &:hover,
+    &:active {
+      polygon,
+      path {
+        fill: none;
+      }
+    }
+  }
+  .btnEdit:hover,
+  .btnEdit:active {
+    polygon,
+    path {
+      stroke: $important2;
+    }
+  }
+  .btnChecked:hover,
+  .btnChecked:active {
+    polygon,
+    path {
+      stroke: $important3;
+    }
+  }
+  .completed:hover,
+  .completed:active {
+    polygon,
+    path {
+      stroke: $important2;
+    }
+  }
+  .btnDel:hover,
+  .btnDel:active {
+    polygon,
+    path {
+      stroke: $important1;
+    }
+  }
+  .btnMenu {
+    display: none;
+  }
+  .item:hover {
+    .text {
+      color: var(--font-color);
+    }
+    .itemMenu {
+      opacity: 1;
+    }
+  }
+  .list {
+    li:hover .btnMenu {
+      opacity: 1;
+    }
+    li[data-color-id='1'] {
+      &:hover {
+        background-color: $important1Transp;
+      }
+    }
+    li[data-color-id='2'] {
+      &:hover {
+        background-color: $important2Transp;
+      }
+    }
+    li[data-color-id='3'] {
+      &:hover {
+        background-color: $important3Transp;
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+@import '../../style/themes.scss';
+
+$colors: (
+  1: var(--1),
+  2: var(--2),
+  3: var(--3),
+  4: var(--4),
+  5: var(--5),
+  6: var(--6),
+  7: var(--7),
+  8: var(--8),
+);
+
+// pie chart
+.recharts-layer {
+  .recharts-bar-rectangle,
+  .recharts-pie-sector {
+    @each $index, $color in $colors {
+      &:nth-child(#{$index}) {
+        circle,
+        path:not(.none-fill) {
+          fill: #{$color};
+        }
+        circle,
+        path.none-fill {
+          stroke: #{$color};
+        }
+      }
+    }
+  }
+}
+
+.recharts-tooltip-cursor {
+  fill: var(--transp);
+}
