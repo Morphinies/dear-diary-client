@@ -1,8 +1,9 @@
 import s from './Select.module.scss';
 import listAnimation from '../../utils/listAnimation';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, ReactNode, useEffect, useRef, useState } from 'react';
 import arrowDownIcon from '../../assets/icons/arrowDownIcon';
 import plusIcon from '../../assets/icons/plusIcon';
+import editIcon from '../../assets/icons/editIcon';
 
 type SelectProps = {
   list: any[];
@@ -17,6 +18,8 @@ type SelectProps = {
   listClassName?: string;
   iconClassName?: string;
   selectIcon?: JSX.Element;
+  notEditList?: number[];
+  handleEdit?: (val: any) => void;
   handleSelect: (val: any) => void;
 };
 
@@ -26,12 +29,14 @@ const Select: FC<SelectProps> = ({
   listId,
   topLabel,
   handleAdd,
+  handleEdit,
+  notEditList,
   isSorting,
   selectIcon,
-  selectedItem,
   handleSelect,
   addLabel = '',
   className = '',
+  selectedItem = '',
   iconClassName = '',
   listClassName = '',
 }) => {
@@ -75,6 +80,38 @@ const Select: FC<SelectProps> = ({
     }
   };
 
+  const getSelectedName = (): ReactNode => {
+    if (!label) {
+      if (typeof selectedItem === 'object') {
+        if (selectedItem.name) {
+          return selectedItem.name;
+        }
+        if (selectedItem.value) {
+          return selectedItem.value;
+        }
+      } else {
+        return selectedItem;
+      }
+    } else {
+      if (typeof selectedItem === 'object') {
+        if (selectedItem.name) {
+          return label + ': ' + selectedItem.name;
+        }
+        if (selectedItem.value) {
+          return label + ': ' + selectedItem.value;
+        } else {
+          return label;
+        }
+      } else {
+        if (selectedItem) {
+          return label + ': ' + selectedItem;
+        } else {
+          return label;
+        }
+      }
+    }
+  };
+
   return (
     <div
       className={
@@ -95,14 +132,7 @@ const Select: FC<SelectProps> = ({
           <div className={s.selectIcon + ' ' + iconClassName}>{selectIcon}</div>
         )}
         {isSorting && <p>Сортировка</p>}
-        {!isSorting && !selectIcon && (
-          <p>
-            {label && <strong>{label + ': '}</strong>}
-            {typeof selectedItem === 'object'
-              ? selectedItem.name || selectedItem.text
-              : selectedItem}
-          </p>
-        )}
+        {!isSorting && !selectIcon && <p>{getSelectedName()}</p>}
         <i className={s.arrow}>{arrowDownIcon}</i>
       </button>
       <div className={s.listWrap + ' ' + listClassName} id={`list_${listId}`}>
@@ -122,7 +152,20 @@ const Select: FC<SelectProps> = ({
                 setIsOpened(false);
               }}
             >
-              {typeof item === 'object' ? item.name || item.text : item}
+              <span>
+                {typeof item === 'object' ? item.name || item.text : item}
+              </span>
+              {handleEdit && !notEditList?.includes(index) && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleEdit(item);
+                  }}
+                  className={s.btnEdit}
+                >
+                  {editIcon}
+                </button>
+              )}
             </li>
           ))}
         </ul>

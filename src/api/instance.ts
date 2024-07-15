@@ -43,7 +43,12 @@ axiosInstance.interceptors.response.use(
           withCredentials: true,
         });
         localStorage.setItem('accessToken', res.data.accessToken);
-        return axiosInstance.request(originalRequest);
+        console.log(originalRequest.data);
+        console.log('parsed ', JSON.parse(originalRequest.data));
+        return axiosInstance.request({
+          ...originalRequest,
+          data: JSON.parse(originalRequest.data),
+        });
       } catch (e) {
         console.log('Пользователь не авторизован');
       }

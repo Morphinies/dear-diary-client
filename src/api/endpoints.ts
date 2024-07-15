@@ -26,6 +26,19 @@ const Endpoints = {
     ADD_CATEGORY: URI + 'finance/trans_category_update',
     GET_CATEGORY_LIST: URI + 'finance/trans_category_list',
   },
+  DIAGRAM: {
+    DEL_DATA_ITEM: URI + 'diagram/del_item',
+    GET_DATA_LIST: URI + 'diagram/data_list',
+    EDIT_DATA_ITEM: URI + 'diagram/update_item',
+
+    DEL_CATEGORY: URI + 'diagram/del_category',
+    EDIT_CATEGORY: URI + 'diagram/update_category',
+    GET_CATEGORY_LIST: URI + 'diagram/category_list',
+
+    DEL_CHAPTER: URI + 'diagram/del_chapter',
+    EDIT_CHAPTER: URI + 'diagram/update_chapter',
+    GET_CHAPTER_LIST: URI + 'diagram/chapter_list',
+  },
   LIST: {
     GET_LIST: URI + 'list',
     UPDATE_ITEM: URI + 'list/item',

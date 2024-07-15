@@ -164,6 +164,7 @@ const Auth = () => {
                   }
                 />
                 <Input
+                  type="password"
                   id="loginPassword"
                   placeholder="Пароль"
                   value={loginData.password}
@@ -191,6 +192,7 @@ const Auth = () => {
                   }
                 />
                 <Input
+                  type="password"
                   id="regPassword"
                   placeholder="Пароль"
                   value={regData.password}

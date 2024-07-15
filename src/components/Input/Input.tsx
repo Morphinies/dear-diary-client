@@ -1,10 +1,12 @@
 import s from './Input.module.scss';
-import { useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import clearIcon from '../../assets/icons/closeIcon';
 import dateFromNumb from '../../utils/dateFromNumb';
 import datetimeFromNumb from '../../utils/datetimeFromNumb';
+import eyeOnIcon from '../../assets/icons/eyeOnIcon';
+import eyeOffIcon from '../../assets/icons/eyeOffIcon';
 
-type inputType = 'number' | 'text' | 'date' | 'datetime-local';
+type inputType = 'number' | 'text' | 'date' | 'datetime-local' | 'password';
 
 type InputProps = {
   id: string;
@@ -35,6 +37,7 @@ const Input = ({
   type = 'text',
   className = '',
 }: InputProps) => {
+  const [isHidden, setIsHidden] = useState(type === 'password');
   const [onFocus, setOnFocus] = useState(false);
   const [val, setVal] = useState(value);
 
@@ -76,6 +79,21 @@ const Input = ({
     }
   };
 
+  const getType = () => {
+    if (type === 'password') {
+      return isHidden ? 'password' : 'text';
+    } else {
+      return type;
+    }
+  };
+
+  const togglePasType = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    e.stopPropagation();
+    setIsHidden((prev) => !prev);
+  };
+
   return (
     <div className={s.input + ' ' + className}>
       {label && <label className={s.label}>{label}</label>}
@@ -83,14 +101,14 @@ const Input = ({
         className={
           s.inputWrap +
           (!!clearInput ? ' ' + s.withClear : '') +
-          (unit ? ' ' + s.withUnit : '') +
+          (unit || type === 'password' ? ' ' + s.withUnit : '') +
           (onFocus ? ' ' + s.focus : '')
         }
       >
         <input
           id={id}
           name={name}
-          type={type}
+          type={getType()}
           value={getValue(val)}
           autoFocus={autofocus}
           placeholder={placeholder}
@@ -110,6 +128,15 @@ const Input = ({
             }}
           >
             {clearIcon}
+          </button>
+        )}
+        {type === 'password' && (
+          <button
+            type="button"
+            onClick={togglePasType}
+            className={s.btnShowPas}
+          >
+            {isHidden ? eyeOnIcon : eyeOffIcon}
           </button>
         )}
       </div>

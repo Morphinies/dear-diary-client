@@ -6,6 +6,7 @@ import sList from './sList';
 import files from './files';
 import notes from './notes';
 import finance from './finance';
+import diagram from './diagram';
 
 const api = {
   menu,
@@ -16,6 +17,7 @@ const api = {
   sList,
   files,
   finance,
+  diagram,
 };
 
 export default api;

@@ -14,6 +14,7 @@ import Finance from './pages/finance/Finance';
 import Settings from './pages/settings/Settings';
 import CalendarPage from './pages/calendarPage/CalendarPage';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Diagram from './pages/diagram/Diagram';
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: 's_list/:menuId',
         element: <SList />,
+      },
+      {
+        path: 'diagram/:menuId',
+        element: <Diagram />,
       },
     ],
   },

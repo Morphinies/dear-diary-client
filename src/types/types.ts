@@ -254,3 +254,68 @@ export type MenuItemEditType = {
   id: string | null;
   typeId: number | null;
 };
+
+// diagram new
+
+export type DiagramActiveViewType = {
+  id: number;
+  icon: JSX.Element;
+  title: string;
+};
+
+export type DiagramSettingsListType = {
+  chapters: {
+    id: string;
+    name: string;
+  }[];
+  categories: {
+    id: string;
+    name: string;
+  }[];
+  periods: {
+    id: number;
+    name: string;
+  }[];
+  views: DiagramActiveViewType[];
+};
+
+export type DiagramActiveSettingsType = {
+  chapter: {
+    id: string;
+    name: string;
+  };
+  category: {
+    id: string;
+    name: string;
+  };
+  period: {
+    id: number;
+    name: string;
+  };
+  view: DiagramActiveViewType;
+};
+
+export type DiagramDataItemType = {
+  id: string;
+  desc: string;
+  date: number;
+  value: number;
+  chapterId: string;
+  categoryId: string;
+};
+
+export type DiagramDataEditItemType = {
+  id?: string;
+  desc: string;
+  date: number;
+  value: number;
+  chapterId: string;
+  categoryId: string;
+};
+
+export type DiagramDataPeriodType = {
+  id?: number;
+  name?: string;
+  startDate: number;
+  finishDate: number;
+};
