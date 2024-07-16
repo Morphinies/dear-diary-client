@@ -5,11 +5,13 @@ import { DiagramDataItemType } from '../../../types/types';
 
 type DiagramDataListPropsType = {
   dataList: DiagramDataItemType[];
+  getCategoryName: (id: string) => string;
   setEditDataItem: (v: DiagramDataItemType) => void;
 };
 // DiagramDataList
 const DiagramDataList: FC<DiagramDataListPropsType> = ({
   dataList,
+  getCategoryName,
   setEditDataItem,
 }) => {
   const dataListRef = useRef<HTMLUListElement>(null);
@@ -29,7 +31,7 @@ const DiagramDataList: FC<DiagramDataListPropsType> = ({
             onClick={() => setEditDataItem(item)}
           >
             <div className={s.dataItemLeft}>
-              {/* <p>{item.category.name}</p> */}
+              <p>{getCategoryName(item.categoryId)}</p>
               <p className={s.secondary}>{item.desc}</p>
             </div>
             <div className={s.dataItemRight}>

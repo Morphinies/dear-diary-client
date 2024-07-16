@@ -34,10 +34,8 @@ const DiagramPopupData: FC<DiagramPopupDataType> = ({
   const [data, setData] = useState<DiagramDataEditItemType>(dataItem);
   const [editCategory, setEditCategory] = useState<any>();
 
-  const handleDel = () => {
-    if (dataItem.id) {
-      del(dataItem.id);
-    }
+  const handleDel = (itemId: string) => {
+    del(itemId);
   };
 
   const changeData = (key: string, val: any) => {
@@ -45,58 +43,66 @@ const DiagramPopupData: FC<DiagramPopupDataType> = ({
   };
 
   const getSelectedItem = () => {
-    return settingsList.categories.find(
-      (cat) => cat.id === dataItem.categoryId
-    );
+    return settingsList.categories
+      .slice(1)
+      .find((cat) => cat.id === data.categoryId);
   };
 
   return (
-    <Popup del={handleDel} title={`Статья`} close={close}>
+    <Popup
+      close={close}
+      ok={() => save(data)}
+      title={`Статья "${activeSettings.chapter.name}"`}
+      del={data.id ? () => data.id && handleDel(data.id) : undefined}
+    >
       <div className={s.dataItemPopupForm}>
         <Input
           unit={'р'}
           type="number"
-          value={data.value}
-          placeholder="Сумма"
-          id="editTransSumInput"
+          placeholder="Значение"
+          value={data.value || ''}
+          id="editDataItemValueInput"
           className={s.dataItemInput}
           handleChange={(val) => changeData('value', val)}
         />
         <Select
           className={s.dataItemSelect}
           handleEdit={setEditCategory}
-          listId={'editTransCategory'}
           addLabel="Добавить категорию"
-          list={settingsList.categories}
           selectedItem={getSelectedItem()}
+          listId={'editDataItemCategoryInput'}
           handleAdd={() => setEditCategory({})}
+          list={settingsList.categories.slice(1)}
           handleSelect={(val) => changeData('categoryId', val.id)}
         />
         <Input
           type="date"
           value={data.date}
-          id="dataItemDateInput"
+          id="editDataItemDateInput"
           className={s.dataItemDateInput}
           handleChange={(val) => changeData('date', val)}
         />
         <Textarea
           value={data.desc}
-          id="dataItemDescInput"
+          id="editDataItemDescInput"
           className={s.dataItemDescInput}
           placeholder="Дополнительная информация"
           handleChange={(val) => changeData('desc', val)}
         />
-        <Button
+        {/* <Button
           className={s.submit}
           text="Сохранить изменения"
           handleClick={() => save(data)}
-        />
+        /> */}
       </div>
       {editCategory && (
         <DiagramPopupCategory
           editCategory={editCategory}
           activeSettings={activeSettings}
-          updateCategoryList={updateCategoryList}
+          updateCategoryList={(cat: any, key: string) => {
+            setEditCategory(undefined);
+            updateCategoryList(cat, key);
+          }}
           close={() => setEditCategory(undefined)}
         />
       )}

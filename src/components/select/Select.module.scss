@@ -78,6 +78,7 @@
 }
 
 .selected {
+  padding-right: 0.5rem;
   @extend .btn;
   color: var(--font-color-transp);
   border-color: var(--transp-x3);

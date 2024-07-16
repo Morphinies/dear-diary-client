@@ -12,11 +12,11 @@ import DiagramPieChart from './DiagramPieChart';
 import DiagramDataList from './DiagramDataList';
 import { FC, useEffect, useState } from 'react';
 import DiagramPopupData from './DiagramPopupData';
+import Button from '../../../components/button/Button';
 import getMonthName from '../../../utils/getMonthName';
 import getDaysInMonth from '../../../utils/getDaysInMonth';
 import { getDataPeriod } from '../../../utils/getDataPeriod';
 import arrowDownIcon from '../../../assets/icons/arrowDownIcon';
-import Button from '../../../components/button/Button';
 
 type DiagramDataType = {
   settingsList: DiagramSettingsListType;
@@ -29,7 +29,6 @@ const DiagramData: FC<DiagramDataType> = ({
   activeSettings,
   updateCategoryList,
 }) => {
-  const [dataListByCat, setDataListByCat] = useState<any[]>([]);
   const [activeDataPeriod, setActiveDataPeriod] =
     useState<DiagramDataPeriodType>({
       startDate: 0,
@@ -38,10 +37,10 @@ const DiagramData: FC<DiagramDataType> = ({
 
   // data
   const [dataList, setDataList] = useState<DiagramDataItemType[]>([]);
-  const [editDataItem, setEditDataItem] = useState<DiagramDataEditItemType>();
   const [showedDataList, setShowedDataList] = useState<DiagramDataItemType[]>(
     []
   );
+  const [transformDataList, setTransformDataList] = useState<any[]>([]);
   const [defDataItem] = useState<DiagramDataEditItemType>({
     value: 0,
     desc: '',
@@ -49,7 +48,24 @@ const DiagramData: FC<DiagramDataType> = ({
     chapterId: activeSettings.chapter.id,
     categoryId: activeSettings.category.id,
   });
-  const [dataItem, setDataItem] = useState(defDataItem);
+
+  const [editDataItem, setEditDataItem] = useState<
+    DiagramDataEditItemType | undefined
+  >();
+
+  console.log(editDataItem);
+
+  useEffect(() => {}, [activeSettings.chapter, settingsList.categories]);
+
+  const addDataItem = () => {
+    setEditDataItem({
+      ...defDataItem,
+      chapterId: activeSettings.chapter.id,
+      categoryId: settingsList.categories[1]
+        ? settingsList.categories[1].id
+        : '',
+    });
+  };
 
   useEffect(() => {
     if (activeSettings.period.id) {
@@ -211,8 +227,8 @@ const DiagramData: FC<DiagramDataType> = ({
     }
   };
 
-  const getDataList = async () => {
-    const data = await api.diagram.getDataList();
+  const getDataList = async (chapterId: string, categoryId: string) => {
+    const data = await api.diagram.getDataList(chapterId, categoryId);
     if (data) {
       setDataList([...data]);
     } else {
@@ -232,52 +248,51 @@ const DiagramData: FC<DiagramDataType> = ({
     }
   };
 
+  const getCategoryName = (catId: string): string => {
+    const cat = settingsList.categories.find((cat) => cat.id === catId);
+    return cat?.name || '';
+  };
+
   useEffect(() => {
-    if (!dataList.length) return;
-    // filter by chapter
-    const filtredList = dataList.filter(
-      (dataItem) => dataItem.chapterId === activeSettings.chapter.id
-    );
-    // filter by category
-    const filtredByCategory =
-      activeSettings.chapter.id === '1'
-        ? filtredList
-        : filtredList.filter(
-            (trans) => trans.categoryId === activeSettings.category.id
-          );
     // filter by date
-    const filtredByDateList = filtredByCategory.filter(
-      (trans) =>
-        trans.date <= activeDataPeriod.finishDate &&
-        trans.date >= +activeDataPeriod.startDate
+    const filtredByDateList = dataList.filter(
+      (item) =>
+        item.date <= activeDataPeriod.finishDate &&
+        item.date >= +activeDataPeriod.startDate
     );
+
     // sorted by date
     const sortedByDateList = filtredByDateList.sort((a, b) => a.date - b.date);
+
     // transformation by category
     const transformList: any[] = [];
-    // for (let item of sortedByDateList) {
-    //   const categoryIndex = transformList.findIndex(
-    //     (transformItem) => transformItem.category === item.category.name
-    //   );
-    //   if (categoryIndex < 0) {
-    //     transformList.push({ category: item.category.name, data: [item] });
-    //   } else {
-    //     const newItem = {
-    //       ...transformList[categoryIndex],
-    //       data: [...transformList[categoryIndex].data, item],
-    //     };
-    //     transformList.splice(categoryIndex, 1, newItem);
-    //   }
-    // }
-    setShowedDataList([...sortedByDateList]);
-    setDataListByCat([...transformList]);
-    if (sortedByDateList.length) {
-      const maxNumTrans = _.maxBy(sortedByDateList, 'num');
-      if (!maxNumTrans) return;
-      // setDataItem((prev) => ({ ...prev, num: maxNumTrans.num + 1 }));
-    } else {
-      // setDataItem((prev) => ({ ...prev, num: 1 }));
+
+    for (let item of sortedByDateList) {
+      const categoryIndex = transformList.findIndex(
+        (transformItem) => transformItem.categoryId === item.categoryId
+      );
+      if (categoryIndex < 0) {
+        transformList.push({
+          category: getCategoryName(item.categoryId),
+          data: [item],
+        });
+      } else {
+        const newItem = {
+          ...transformList[categoryIndex],
+          data: [...transformList[categoryIndex].data, item],
+        };
+        transformList.splice(categoryIndex, 1, newItem);
+      }
     }
+    setShowedDataList([...sortedByDateList]);
+    setTransformDataList([...transformList]);
+    // if (sortedByDateList.length) {
+    //   const maxNumTrans = _.maxBy(sortedByDateList, 'num');
+    //   if (!maxNumTrans) return;
+    //   // setDataItem((prev) => ({ ...prev, num: maxNumTrans.num + 1 }));
+    // } else {
+    //   // setDataItem((prev) => ({ ...prev, num: 1 }));
+    // }
   }, [
     dataList,
     activeDataPeriod,
@@ -286,10 +301,10 @@ const DiagramData: FC<DiagramDataType> = ({
   ]);
 
   useEffect(() => {
-    if (activeSettings.category.id) {
-      getDataList();
+    if (activeSettings.chapter.id && activeSettings.category.id) {
+      getDataList(activeSettings.chapter.id, activeSettings.category.id);
     }
-  }, [activeSettings.category]);
+  }, [activeSettings.category, activeSettings.chapter]);
 
   return (
     <div className={s.main}>
@@ -297,19 +312,20 @@ const DiagramData: FC<DiagramDataType> = ({
         <div className={s.diagramDataList}>
           <DiagramDataList
             dataList={showedDataList}
+            getCategoryName={getCategoryName}
             setEditDataItem={setEditDataItem}
           />
           <Button
             text="Добавить запись"
             className={s.btnAddDataItem}
-            handleClick={() => setEditDataItem(defDataItem)}
+            handleClick={addDataItem}
           />
         </div>
       </div>
       <div className={s.diagram}>
         <div className={s.diagramDataPeriod}>{getDataPeriodTitle()}</div>
         <DiagramPieChart
-          finData={dataListByCat}
+          finData={transformDataList}
           activeViewType={activeSettings.view}
         />
       </div>
@@ -317,7 +333,7 @@ const DiagramData: FC<DiagramDataType> = ({
         <DiagramPopupData
           del={delDataItem}
           save={saveDataItem}
-          dataItem={dataItem}
+          dataItem={editDataItem}
           settingsList={settingsList}
           activeSettings={activeSettings}
           updateCategoryList={updateCategoryList}

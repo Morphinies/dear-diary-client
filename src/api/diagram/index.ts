@@ -119,9 +119,17 @@ async function delChapter(id: string): Promise<any | undefined> {
 
 // data
 
-async function getDataList(): Promise<DiagramDataItemType[] | undefined> {
+async function getDataList(
+  chapterId: string,
+  categoryId: string
+): Promise<DiagramDataItemType[] | undefined> {
   try {
-    const res: any = await axiosInstance.get(Endpoints.DIAGRAM.GET_DATA_LIST);
+    const res: any = await axiosInstance.get(Endpoints.DIAGRAM.GET_DATA_LIST, {
+      params: {
+        categoryId,
+        chapterId,
+      },
+    });
     if (res && res.data) {
       return res.data;
     } else {
@@ -150,11 +158,15 @@ async function editDataItem(
   }
 }
 
-async function delDataItem(dataItemId: string): Promise<any | undefined> {
+async function delDataItem(id: string): Promise<any | undefined> {
   try {
-    const res: any = await axiosInstance.post(
+    const res: any = await axiosInstance.delete(
       Endpoints.DIAGRAM.DEL_DATA_ITEM,
-      dataItemId
+      {
+        params: {
+          id,
+        },
+      }
     );
     if (res && res.data) {
       return res.data;
