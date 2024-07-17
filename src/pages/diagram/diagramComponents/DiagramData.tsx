@@ -1,9 +1,10 @@
 import {
+  DiagramDataType,
   DiagramDataItemType,
   DiagramDataPeriodType,
   DiagramDataEditItemType,
-  DiagramActiveSettingsType,
-  DiagramSettingsListType,
+  DiagramPieChartDataType,
+  TransformDiagramDataItem,
 } from '../../../types/types';
 import _ from 'lodash';
 import api from '../../../api';
@@ -18,17 +19,13 @@ import getDaysInMonth from '../../../utils/getDaysInMonth';
 import { getDataPeriod } from '../../../utils/getDataPeriod';
 import arrowDownIcon from '../../../assets/icons/arrowDownIcon';
 
-type DiagramDataType = {
-  settingsList: DiagramSettingsListType;
-  activeSettings: DiagramActiveSettingsType;
-  updateCategoryList: (cat: any, key: string) => void;
-};
-
 const DiagramData: FC<DiagramDataType> = ({
   settingsList,
   activeSettings,
   updateCategoryList,
+  changeActiveSettings,
 }) => {
+  const [loading, setloading] = useState(true);
   const [activeDataPeriod, setActiveDataPeriod] =
     useState<DiagramDataPeriodType>({
       startDate: 0,
@@ -40,7 +37,12 @@ const DiagramData: FC<DiagramDataType> = ({
   const [showedDataList, setShowedDataList] = useState<DiagramDataItemType[]>(
     []
   );
-  const [transformDataList, setTransformDataList] = useState<any[]>([]);
+  const [transformAllDataList, setTransformAllDataList] = useState<
+    DiagramPieChartDataType[]
+  >([]);
+  const [transformDataList, setTransformDataList] = useState<
+    DiagramPieChartDataType[]
+  >([]);
   const [defDataItem] = useState<DiagramDataEditItemType>({
     value: 0,
     desc: '',
@@ -53,17 +55,16 @@ const DiagramData: FC<DiagramDataType> = ({
     DiagramDataEditItemType | undefined
   >();
 
-  console.log(editDataItem);
-
   useEffect(() => {}, [activeSettings.chapter, settingsList.categories]);
 
   const addDataItem = () => {
     setEditDataItem({
       ...defDataItem,
       chapterId: activeSettings.chapter.id,
-      categoryId: settingsList.categories[1]
-        ? settingsList.categories[1].id
-        : '',
+      categoryId:
+        activeSettings.category.id !== '1'
+          ? activeSettings.category.id
+          : settingsList.categories[1]?.id || '',
     });
   };
 
@@ -112,40 +113,32 @@ const DiagramData: FC<DiagramDataType> = ({
         ? startMonth
         : `${startMonth} - ${finishMonth} `;
 
-    let firstLine = '';
-    let secondLine = '';
-    let thirdLine = '';
+    let resText = '';
 
     switch (activeDataPeriod.id) {
       case 1:
-        firstLine = year;
-        secondLine = month;
-        thirdLine = date;
+        resText = date;
         break;
       case 2:
-        firstLine = year;
-        secondLine = '';
-        // secondLine = date;
-        thirdLine = month;
+        resText = month + ' ' + year;
         break;
       case 3:
-        firstLine = '';
-        secondLine = '';
-        // secondLine = date;
-        thirdLine = year;
+        resText = year;
         break;
       default:
+        resText = date;
         break;
     }
     return (
       <>
-        <p className={s.secondary}>{firstLine}</p>
-        <p className={s.secondary}>{secondLine}</p>
+        {/* <p className={s.secondary}>{firstLine}</p> */}
+        {/* <p className={s.secondary}>{secondLine}</p> */}
         <div className={s.diagramPeriodTitleWrap}>
           <button onClick={() => changePeriod('prev')} className="btnPrev">
             {arrowDownIcon}
           </button>
-          <h3 className={s.diagramPeriodTitle}>{thirdLine}</h3>
+          {/* <h3 className={s.diagramPeriodTitle}>{thirdLine}</h3> */}
+          <h3 className={s.diagramPeriodTitle}>{resText}</h3>
           <button onClick={() => changePeriod('next')} className="btnNext">
             {arrowDownIcon}
           </button>
@@ -228,12 +221,26 @@ const DiagramData: FC<DiagramDataType> = ({
   };
 
   const getDataList = async (chapterId: string, categoryId: string) => {
+    setloading(true);
     const data = await api.diagram.getDataList(chapterId, categoryId);
     if (data) {
       setDataList([...data]);
     } else {
       console.log('Не удалось загрузить данные');
     }
+    setloading(false);
+  };
+
+  const getDefDataList = async (chapterId: string, categoryId: string) => {
+    setloading(true);
+    const data = await api.diagram.getDataList(chapterId, categoryId);
+    if (data) {
+      const transformedData = getTransformDataList(data);
+      setTransformAllDataList([...transformedData]);
+    } else {
+      console.log('Не удалось загрузить данные');
+    }
+    setloading(false);
   };
 
   const delDataItem = async (id: string) => {
@@ -253,6 +260,50 @@ const DiagramData: FC<DiagramDataType> = ({
     return cat?.name || '';
   };
 
+  const getCategoryId = (catName: string): string => {
+    const cat = settingsList.categories.find((cat) => cat.name === catName);
+    return cat?.id || '';
+  };
+
+  const getTransformDataList = (
+    list: DiagramDataItemType[],
+    catId?: string
+  ) => {
+    const transformList: TransformDiagramDataItem[] = [];
+    if (catId) {
+      for (let item of list) {
+        transformList.push({
+          category: item.desc || getCategoryName(item.categoryId),
+          data: [item],
+        });
+      }
+    } else {
+      for (let item of list) {
+        const categoryIndex = transformList.findIndex(
+          (transformItem) =>
+            transformItem.category === getCategoryName(item.categoryId)
+        );
+        if (categoryIndex < 0) {
+          transformList.push({
+            category: getCategoryName(item.categoryId),
+            data: [item],
+          });
+        } else {
+          const newItem = {
+            ...transformList[categoryIndex],
+            data: [...transformList[categoryIndex].data, item],
+          };
+          transformList.splice(categoryIndex, 1, newItem);
+        }
+      }
+    }
+    const resTransformList = transformList.map((item) => ({
+      category: item.category,
+      value: item.data.reduce((acc, item) => acc + +item.value, 0),
+    }));
+    return resTransformList;
+  };
+
   useEffect(() => {
     // filter by date
     const filtredByDateList = dataList.filter(
@@ -260,32 +311,16 @@ const DiagramData: FC<DiagramDataType> = ({
         item.date <= activeDataPeriod.finishDate &&
         item.date >= +activeDataPeriod.startDate
     );
-
     // sorted by date
     const sortedByDateList = filtredByDateList.sort((a, b) => a.date - b.date);
-
-    // transformation by category
-    const transformList: any[] = [];
-
-    for (let item of sortedByDateList) {
-      const categoryIndex = transformList.findIndex(
-        (transformItem) => transformItem.categoryId === item.categoryId
-      );
-      if (categoryIndex < 0) {
-        transformList.push({
-          category: getCategoryName(item.categoryId),
-          data: [item],
-        });
-      } else {
-        const newItem = {
-          ...transformList[categoryIndex],
-          data: [...transformList[categoryIndex].data, item],
-        };
-        transformList.splice(categoryIndex, 1, newItem);
-      }
-    }
     setShowedDataList([...sortedByDateList]);
-    setTransformDataList([...transformList]);
+    const transformedData = getTransformDataList(
+      sortedByDateList,
+      activeSettings.category.id === '1'
+        ? undefined
+        : activeSettings.category.id
+    );
+    setTransformDataList([...transformedData]);
     // if (sortedByDateList.length) {
     //   const maxNumTrans = _.maxBy(sortedByDateList, 'num');
     //   if (!maxNumTrans) return;
@@ -293,18 +328,34 @@ const DiagramData: FC<DiagramDataType> = ({
     // } else {
     //   // setDataItem((prev) => ({ ...prev, num: 1 }));
     // }
-  }, [
-    dataList,
-    activeDataPeriod,
-    activeSettings.chapter,
-    activeSettings.category,
-  ]);
+  }, [dataList, activeDataPeriod, activeSettings.chapter]);
+
+  const changeActiveCategory = (categoryId: string) => {
+    if (activeSettings.category.id === categoryId) {
+      if (categoryId === '1') return;
+      changeActiveSettings(
+        'category',
+        settingsList.categories.find((cat) => cat.id === '1')
+      );
+    } else {
+      changeActiveSettings(
+        'category',
+        settingsList.categories.find((cat) => cat.id === categoryId)
+      );
+    }
+  };
 
   useEffect(() => {
     if (activeSettings.chapter.id && activeSettings.category.id) {
       getDataList(activeSettings.chapter.id, activeSettings.category.id);
     }
   }, [activeSettings.category, activeSettings.chapter]);
+
+  useEffect(() => {
+    if (settingsList.categories.length >= 0) {
+      getDefDataList(activeSettings.chapter.id, '1');
+    }
+  }, [settingsList.categories]);
 
   return (
     <div className={s.main}>
@@ -325,9 +376,53 @@ const DiagramData: FC<DiagramDataType> = ({
       <div className={s.diagram}>
         <div className={s.diagramDataPeriod}>{getDataPeriodTitle()}</div>
         <DiagramPieChart
-          finData={transformDataList}
+          diagramData={transformDataList}
           activeViewType={activeSettings.view}
         />
+        {!!transformAllDataList.length && (
+          <div className={s.summary}>
+            <ul className={s.summaryList}>
+              <li
+                className={
+                  s.summaryItem +
+                  ' ' +
+                  s.summaryTotal +
+                  ' ' +
+                  (activeSettings.category.id === '1' ? s.active : '')
+                }
+                onClick={() => changeActiveCategory('1')}
+              >
+                <div className={s.circle}></div>
+                <p>Всего:</p>
+                <p>
+                  {transformAllDataList.reduce(
+                    (prev, cur) => prev + cur.value,
+                    0
+                  )}
+                </p>
+              </li>
+              {transformAllDataList.map((item, i) => (
+                <li
+                  key={i}
+                  className={
+                    s.summaryItem +
+                    ' ' +
+                    (activeSettings.category.name === item.category
+                      ? s.active
+                      : '')
+                  }
+                  onClick={() =>
+                    changeActiveCategory(getCategoryId(item.category))
+                  }
+                >
+                  <div className={s.circle}></div>
+                  <p>{item.category}:</p>
+                  <p>{item.value}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
       {editDataItem && (
         <DiagramPopupData

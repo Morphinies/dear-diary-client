@@ -25,18 +25,7 @@ const Main = () => {
     // eslint-disable-next-line
   }, []);
 
-  return (
-    <div className={s.main}>
-      {isActivated && (
-        <>
-          <Header />
-          <div className={s.content}>
-            <Outlet />
-          </div>
-        </>
-      )}
-    </div>
-  );
+  return <div className={s.main}>{isActivated && <Outlet />}</div>;
 };
 
 export default Main;

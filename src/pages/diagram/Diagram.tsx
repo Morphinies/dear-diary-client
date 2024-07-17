@@ -1,21 +1,24 @@
 import {
   DiagramSettingsListType,
   DiagramActiveSettingsType,
+  MenuItemType,
 } from '../../types/types';
 import api from '../../api';
 import s from './Diagram.module.scss';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import DiagramSettings from './DiagramSettings';
+import Header from '../../components/header/Header';
 import DiagramData from './diagramComponents/DiagramData';
 import pieChartIcon from '../../assets/icons/diagrams/pieChartIcon';
-import barChartIcon from '../../assets/icons/diagrams/barChartIcon';
 import DiagramPopupChapter from './diagramComponents/DiagramPopupChapter';
 import DiagramPopupCategory from './diagramComponents/DiagramPopupCategory';
 import pieChartTypeBIcon from '../../assets/icons/diagrams/pieChartTypeBIcon';
 
 const Diagram = () => {
   const { menuId } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [menu, setMenu] = useState<MenuItemType>();
   const [editChapter, setEditChapter] = useState<any>();
   const [editCategory, setEditCategory] = useState<any>();
   const [defCategory] = useState({ name: 'Все категории', id: '1' });
@@ -31,7 +34,7 @@ const Diagram = () => {
     views: [
       { id: 1, icon: pieChartIcon, title: 'Круговая диаграмма тип "A"' },
       { id: 2, icon: pieChartTypeBIcon, title: 'Круговая диаграмма тип "B"' },
-      { id: 3, icon: barChartIcon, title: 'Гистограмма' },
+      // { id: 3, icon: barChartIcon, title: 'Гистограмма' },
     ],
   });
 
@@ -60,11 +63,19 @@ const Diagram = () => {
   };
 
   const getChapterList = async (menuId: string) => {
+    setLoading(true);
+
     const data = await api.diagram.getChapterList(menuId);
+    const menu = await api.menu.getItem(menuId);
+    if (menu) {
+      setMenu(menu);
+    }
+
     if (data) {
       changeSettingsList('chapters', [...data]);
       changeActiveSettings('chapter', data[0] || {});
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -136,46 +147,65 @@ const Diagram = () => {
     setEditChapter(undefined);
   };
 
-  return (
-    <div className={s.diagramWrap}>
-      <DiagramSettings
-        settingsList={settingsList}
-        activeSettings={activeSettings}
-        changeActiveSettings={changeActiveSettings}
-        editChapter={(val) => (val ? setEditChapter(val) : setEditChapter({}))}
-        editCategory={(val) =>
-          val ? setEditCategory(val) : setEditCategory({})
-        }
-      />
-      {activeSettings.chapter.id ? (
-        <DiagramData
-          settingsList={settingsList}
-          activeSettings={activeSettings}
-          updateCategoryList={updateCategoryList}
-        />
-      ) : (
-        <div></div>
-      )}
-      {/* popups */}
-      {editCategory && (
-        <DiagramPopupCategory
-          editCategory={editCategory}
-          activeSettings={activeSettings}
-          close={() => setEditCategory(undefined)}
-          updateCategoryList={updateCategoryList}
-        />
-      )}
-      {editChapter && menuId && (
-        <DiagramPopupChapter
-          menuId={menuId}
-          editChapter={editChapter}
-          updateChapterList={updateChapterList}
-          close={() => setEditChapter(undefined)}
-        />
-      )}
+  const getTitle = () => {
+    if (loading) {
+      return '';
+    }
+    if (activeSettings.chapter.name) {
+      return activeSettings.chapter.name;
+    } else {
+      return 'Диаграмма';
+    }
+  };
 
-      {/* <FinStatistic /> */}
-    </div>
+  return (
+    <>
+      <Header title={getTitle()} />
+      {!loading && (
+        <div className={s.diagramWrap}>
+          <DiagramSettings
+            settingsList={settingsList}
+            activeSettings={activeSettings}
+            changeActiveSettings={changeActiveSettings}
+            editChapter={(val) =>
+              val ? setEditChapter(val) : setEditChapter({})
+            }
+            editCategory={(val) =>
+              val ? setEditCategory(val) : setEditCategory({})
+            }
+          />
+          {activeSettings.chapter.id ? (
+            <DiagramData
+              settingsList={settingsList}
+              activeSettings={activeSettings}
+              updateCategoryList={updateCategoryList}
+              changeActiveSettings={changeActiveSettings}
+            />
+          ) : (
+            <div></div>
+          )}
+          {/* popups */}
+          {editCategory && (
+            <DiagramPopupCategory
+              editCategory={editCategory}
+              activeSettings={activeSettings}
+              close={() => setEditCategory(undefined)}
+              updateCategoryList={updateCategoryList}
+            />
+          )}
+          {editChapter && menuId && (
+            <DiagramPopupChapter
+              menuId={menuId}
+              editChapter={editChapter}
+              updateChapterList={updateChapterList}
+              close={() => setEditChapter(undefined)}
+            />
+          )}
+
+          {/* <FinStatistic /> */}
+        </div>
+      )}
+    </>
   );
 };
 

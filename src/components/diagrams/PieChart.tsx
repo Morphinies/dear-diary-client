@@ -124,7 +124,7 @@ const PieChart: FC<PieChartType> = ({
     primary: '#2e86de',
     secondary: '#2e86de',
   });
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState<number | undefined>(0);
 
   const onPieEnter = useCallback(
     (_: any, index: number) => {
@@ -135,6 +135,7 @@ const PieChart: FC<PieChartType> = ({
 
   useEffect(() => {
     setActiveIndex(0);
+    // setActiveIndex(undefined);
   }, [data]);
 
   return (

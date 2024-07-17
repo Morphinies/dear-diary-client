@@ -319,3 +319,20 @@ export type DiagramDataPeriodType = {
   startDate: number;
   finishDate: number;
 };
+
+export type DiagramDataType = {
+  settingsList: DiagramSettingsListType;
+  activeSettings: DiagramActiveSettingsType;
+  updateCategoryList: (cat: any, key: string) => void;
+  changeActiveSettings: (key: string, val: any) => void;
+};
+
+export type TransformDiagramDataItem = {
+  category: string;
+  data: DiagramDataItemType[];
+};
+
+export type DiagramPieChartDataType = {
+  category: string;
+  value: number;
+};

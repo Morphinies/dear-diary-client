@@ -5,8 +5,8 @@ import plusIcon from '../../assets/icons/plusIcon';
 import listIcon from '../../assets/icons/listIcon';
 import editIcon from '../../assets/icons/editIcon';
 import EditMenuItemPopup from './EditMenuItemPopup';
+import Header from '../../components/header/Header';
 import { NavLink, useNavigate } from 'react-router-dom';
-import financeIcon from '../../assets/icons/financeIcon';
 import calendarIcon from '../../assets/icons/calendarIcon';
 import { MenuItemEditType, MenuItemType } from '../../types/types';
 
@@ -33,13 +33,6 @@ const Menu = () => {
   });
 
   const [serviceList] = useState<serviceType[]>([
-    {
-      id: 2,
-      name: 'Финансы',
-      icon: financeIcon,
-      route: '/finance',
-      iconClass: s.financeIcon,
-    },
     {
       id: 3,
       name: 'Календарь',
@@ -101,19 +94,21 @@ const Menu = () => {
   };
 
   return (
-    <div className={s.menu}>
-      <div className={s.menuChapter}>
-        {!loading && (
-          <div className={s.serviceList}>
-            {serviceList.map((service, i) => (
-              <NavLink className={s.service} to={service.route} key={i}>
-                <div className={s.iconWrap + ' ' + (service.iconClass ?? '')}>
-                  {service.icon}
-                </div>
-                <p className={s.name}>{service.name}</p>
-              </NavLink>
-            ))}
-            {/* {listsList.map((list, i) => (
+    <>
+      <Header title="Дорогой дневник" />
+      <div className={s.menu}>
+        <div className={s.menuChapter}>
+          {!loading && (
+            <div className={s.serviceList}>
+              {serviceList.map((service, i) => (
+                <NavLink className={s.service} to={service.route} key={i}>
+                  <div className={s.iconWrap + ' ' + (service.iconClass ?? '')}>
+                    {service.icon}
+                  </div>
+                  <p className={s.name}>{service.name}</p>
+                </NavLink>
+              ))}
+              {/* {listsList.map((list, i) => (
               <button
                 className={s.service}
                 onClick={() => navigate(`/list/${list.id}`)}
@@ -141,53 +136,54 @@ const Menu = () => {
                 </span>
               </button>
             ))} */}
-            {menuList.map((item, i) => (
-              <button
-                className={s.service}
-                onClick={() => navigate(getMenuLink(item))}
-                key={i}
-              >
-                <div className={s.iconWrap}>
-                  {item.icon ? (
-                    <img
-                      src={process.env.REACT_APP_API_URI + item.icon}
-                      alt=""
-                    />
-                  ) : (
-                    listIcon
-                  )}
-                </div>
-                <p className={s.name}>{item.name}</p>
-                <span
-                  className={s.btnEdit}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setEditingMenu(item);
-                  }}
+              {menuList.map((item, i) => (
+                <button
+                  className={s.service}
+                  onClick={() => navigate(getMenuLink(item))}
+                  key={i}
                 >
-                  {editIcon}
-                </span>
+                  <div className={s.iconWrap}>
+                    {item.icon ? (
+                      <img
+                        src={process.env.REACT_APP_API_URI + item.icon}
+                        alt=""
+                      />
+                    ) : (
+                      listIcon
+                    )}
+                  </div>
+                  <p className={s.name}>{item.name}</p>
+                  <span
+                    className={s.btnEdit}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setEditingMenu(item);
+                    }}
+                  >
+                    {editIcon}
+                  </span>
+                </button>
+              ))}
+              <button
+                onClick={() => setEditingMenu(defaultMenu)}
+                className={s.service + ' ' + s.add}
+                // onClick={() => setListToUpdate(true)}
+              >
+                <div className={s.iconWrap}>{plusIcon}</div>
               </button>
-            ))}
-            <button
-              onClick={() => setEditingMenu(defaultMenu)}
-              className={s.service + ' ' + s.add}
-              // onClick={() => setListToUpdate(true)}
-            >
-              <div className={s.iconWrap}>{plusIcon}</div>
-            </button>
-          </div>
+            </div>
+          )}
+        </div>
+
+        {editingMenu && (
+          <EditMenuItemPopup
+            menuItem={editingMenu}
+            updateMenuList={updateMenuList}
+            closePopup={() => setEditingMenu(undefined)}
+          />
         )}
       </div>
-
-      {editingMenu && (
-        <EditMenuItemPopup
-          menuItem={editingMenu}
-          updateMenuList={updateMenuList}
-          closePopup={() => setEditingMenu(undefined)}
-        />
-      )}
-    </div>
+    </>
   );
 };
 

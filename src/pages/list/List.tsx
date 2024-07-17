@@ -12,11 +12,12 @@ import jsonEqual from '../../utils/jsonEqual';
 import ListPageSettings from './ListSettings';
 import ListA from '../../components/listA/ListA';
 import ListPageItemEditPopup from './ListEditPopup';
+import Header from '../../components/header/Header';
 
 const List = () => {
   const { menuId } = useParams();
+  const [menu, setMenu] = useState<MenuItemType>();
   const [formMessage, setFormMessage] = useState<string>('');
-  const [menuData, setMenuData] = useState<MenuItemType>();
   const [newItem] = useState<ListItemEditType>({
     sort: 1,
     text: '',
@@ -31,7 +32,11 @@ const List = () => {
   const [listActive, setListActive] = useState<ListItemType[]>([]);
   const [listArchive, setListArchive] = useState<ListItemType[]>([]);
   const [editedItem, setEditedItem] = useState<ListItemEditType | null>(null);
-  const [sortList, setSortList] = useState<sortType[]>([
+
+  const [loading, setLoading] = useState<boolean>(true);
+  const [reorderLoading, setReorderLoading] = useState<boolean>(false);
+  const [selectedSort, setSelectedSort] = useState<sortType | undefined>();
+  const [sortList] = useState<sortType[]>([
     { id: 1, name: 'Ручная' },
     { id: 2, name: 'С новых' },
     { id: 3, name: 'Со старых' },
@@ -40,9 +45,6 @@ const List = () => {
     { id: 6, name: 'С min остатком времени' },
     { id: 7, name: 'С max остатком времени' },
   ]);
-  const [selectedSort, setSelectedSort] = useState<sortType | undefined>();
-  const [reorderLoading, setReorderLoading] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (formMessage) {
@@ -111,7 +113,7 @@ const List = () => {
     const menu = await api.menu.getItem(menuId);
     const data = await api.list.getList(menuId);
     if (menu) {
-      setMenuData(menu);
+      setMenu(menu);
     } else {
       alert('Не удалось загрузить данные списка');
     }
@@ -293,20 +295,21 @@ const List = () => {
     }
   };
 
+  const getTitle = () => {
+    if (loading) {
+      return '';
+    }
+    if (menu) {
+      return menu.name;
+    } else {
+      return 'Список';
+    }
+  };
+
   return (
     <>
-      {editedItem && (
-        <ListPageItemEditPopup
-          save={save}
-          item={editedItem}
-          close={closePopup}
-          delItem={handleDelete}
-          changeItem={changeItem}
-          formMessage={formMessage}
-        />
-      )}
+      <Header title={getTitle()} />
       <div className={s.listWrap}>
-        <h1 className={'text-center'}>{menuData?.name || ''}</h1>
         <ListPageSettings
           addItem={addItem}
           sortList={sortList}
@@ -327,6 +330,16 @@ const List = () => {
           withHandleSort={selectedSort?.id === 1}
         />
       </div>
+      {editedItem && (
+        <ListPageItemEditPopup
+          save={save}
+          item={editedItem}
+          close={closePopup}
+          delItem={handleDelete}
+          changeItem={changeItem}
+          formMessage={formMessage}
+        />
+      )}
     </>
   );
 };

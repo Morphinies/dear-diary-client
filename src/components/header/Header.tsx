@@ -1,88 +1,45 @@
 import s from './Header.module.scss';
 import Button from '../button/Button';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import homeIcon from '../../assets/icons/homeIcon';
-import { useEffect, useRef, useState } from 'react';
-import listAnimation from '../../utils/listAnimation';
 import settingsIcon from '../../assets/icons/settingsIcon';
 // import menuIcon from '../../assets/icons/menuIcon';
 // import closeIcon from '../../assets/icons/closeIcon';
 // import settingsOnIcon from '../../assets/icons/settingsOnIcon';
 
-const Header = () => {
-  const { pathname } = useLocation();
+const Header = ({ title }: { title?: string }) => {
+  // const headerMenuRef = useRef<null | HTMLDivElement>(null);
+  // const [menuOpened, setMenuOpened] = useState<boolean>(false);
 
-  const headerMenuRef = useRef<null | HTMLDivElement>(null);
-  // const [headerLinks] = useState([
-  //   { name: 'Заметки', route: '/notes' },
-  //   { name: 'Цели', route: '/targets' },
-  //   { name: 'Задачи', route: '/tasks' },
-  // ]);
-  const [title, setTitle] = useState('');
-  const [menuOpened, setMenuOpened] = useState<boolean>(false);
+  // useEffect(() => {
+  //   const onClick = (e: any) => {
+  //     if (headerMenuRef.current) {
+  //       if (!headerMenuRef.current.contains(e.target)) {
+  //         setMenuOpened(false);
+  //       }
+  //     }
+  //   };
+  //   document.addEventListener('click', (e) => onClick(e));
+  //   return () => document.removeEventListener('click', (e) => onClick(e));
+  // }, []);
 
-  useEffect(() => {
-    const onClick = (e: any) => {
-      if (headerMenuRef.current) {
-        if (!headerMenuRef.current.contains(e.target)) {
-          setMenuOpened(false);
-        }
-      }
-    };
-    document.addEventListener('click', (e) => onClick(e));
-    return () => document.removeEventListener('click', (e) => onClick(e));
-  }, []);
-
-  useEffect(() => {
-    if (menuOpened) {
-      listAnimation({
-        open: true,
-        padding: 8,
-        id: 'header_menu',
-        isHorizontal: true,
-      });
-    } else {
-      listAnimation({
-        padding: 0,
-        open: false,
-        id: 'header_menu',
-        isHorizontal: true,
-      });
-    }
-  }, [menuOpened]);
-
-  // const settingsBtnIsActive = () => {
-  //   return pathname === '/settings';
-  // };
-
-  const getTitle = (pathname: string) => {
-    switch (pathname.slice(1)) {
-      case 'finance':
-        return 'Финансы';
-      case 'settings':
-        return 'Настройки';
-      case 'notes':
-        return 'Заметки';
-      case 'targets':
-        return 'Цели';
-      case 'tasks':
-        return 'Задачи';
-      case 'calendar':
-        return 'Календарь';
-      case '':
-        return 'Меню';
-
-      default:
-        return '';
-    }
-  };
-
-  useEffect(() => {
-    const resTitle = getTitle(pathname);
-    if (resTitle !== title) {
-      setTitle(resTitle);
-    }
-  }, [pathname, title]);
+  // useEffect(() => {
+  //   if (menuOpened) {
+  //     listAnimation({
+  //       open: true,
+  //       padding: 8,
+  //       id: 'header_menu',
+  //       isHorizontal: true,
+  //     });
+  //   } else {
+  //     listAnimation({
+  //       padding: 0,
+  //       open: false,
+  //       id: 'header_menu',
+  //       isHorizontal: true,
+  //     });
+  //   }
+  // }, [menuOpened]);
 
   return (
     <div className={s.header}>

@@ -234,8 +234,7 @@ $colors: (
 .diagramDataPeriod {
   display: flex;
   align-items: center;
-  flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .diagramPeriodTitleWrap {
@@ -270,7 +269,7 @@ $colors: (
   gap: 2rem;
   width: 100%;
   display: grid;
-  cursor: default;
+  cursor: pointer;
   transition: $trans;
   position: relative;
   grid-template-columns: 1fr 1fr;
@@ -284,19 +283,25 @@ $colors: (
     justify-self: flex-end;
   }
   .circle {
+    top: 1px;
     width: 1rem;
     left: -2rem;
     height: 1rem;
     position: absolute;
     border-radius: 100px;
   }
-  &.summaryTotal {
+  &.summaryTotal .circle {
+    background-color: #fff;
+  }
+  &.active {
     border-color: var(--font-color);
   }
 }
 
 // pie chart
 .summaryList {
+  width: 300px;
+  max-width: 100%;
   .summaryItem:not(.summaryTotal) {
     @each $index, $color in $colors {
       &:nth-child(#{$index + 1}) {
@@ -326,7 +331,7 @@ $colors: (
     color: var(--font-color);
   }
 
-  .summaryItem:not(.summaryTotal):hover {
+  .summaryItem:hover {
     border-color: var(--font-color-transp);
   }
 

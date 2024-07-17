@@ -10,6 +10,7 @@ import Button from '../../components/button/Button';
 import { getFullDate } from '../../utils/getFullDate';
 import Calendar from '../../components/calendar/Calendar';
 import { dayNotesType } from '../../types/types';
+import Header from '../../components/header/Header';
 
 const CalendarPage = () => {
   const [date, setDate] = useState<Date>();
@@ -142,64 +143,67 @@ const CalendarPage = () => {
   };
 
   return (
-    <div className={s.notesCalendar}>
-      {date && nowDate && (
-        <Calendar
-          date={date}
-          nowDate={nowDate}
-          notes={monthNotes}
-          className={s.calendar}
-          updateNotes={updateNotes}
-          setDate={(date) => {
-            setDate(date);
-            getDayNotes(+date);
-          }}
-          dayClick={() => setDayNotesPopupOpened(true)}
-        />
-      )}
-      {/* {notesLoading && <Loader />} */}
+    <>
+      <Header title="Календарь" />
+      <div className={s.notesCalendar}>
+        {date && nowDate && (
+          <Calendar
+            date={date}
+            nowDate={nowDate}
+            notes={monthNotes}
+            className={s.calendar}
+            updateNotes={updateNotes}
+            setDate={(date) => {
+              setDate(date);
+              getDayNotes(+date);
+            }}
+            dayClick={() => setDayNotesPopupOpened(true)}
+          />
+        )}
+        {/* {notesLoading && <Loader />} */}
 
-      {dayNotesPopupOpened && (
-        <Popup
-          ok={() => save()}
-          close={handleClosePopup}
-          windowClass={s.popupWindow}
-          title={`Заметки - ${getFullDate(date)}`}
-        >
-          <div className={s.notesPopupContent}>
-            <ul ref={noteListRef} className={s.noteList}>
-              {dayNotes.map((note, i) => (
-                <li className={s.noteItem} key={i}>
-                  <p className={s.noteNumb}>{i + 1 + '.'}</p>
-                  <Input
-                    value={note}
-                    id={`note_${i}`}
-                    className={s.inputWrap}
-                    clearInput={() => delNote(i)}
-                    handleChange={(val) => changeNote(i, val)}
-                  />
-                </li>
-              ))}
-            </ul>
-            <form className={s.form} onSubmit={(e) => addNote(e)}>
-              <Input
-                id="addNote"
-                value={noteInput}
-                className={s.inputWrap}
-                placeholder="Добавить заметку..."
-                clearInput={() => setNoteInput('')}
-                handleChange={(val) => isString(val) && setNoteInput(val)}
-              />
-              <Button
-                icon={plusIcon}
-                className={s.btnSend}
-                title={'Добавить в заметки'}
-              />
-            </form>
-          </div>
-        </Popup>
-      )}
-    </div>
+        {dayNotesPopupOpened && (
+          <Popup
+            ok={() => save()}
+            close={handleClosePopup}
+            windowClass={s.popupWindow}
+            title={`Заметки - ${getFullDate(date)}`}
+          >
+            <div className={s.notesPopupContent}>
+              <ul ref={noteListRef} className={s.noteList}>
+                {dayNotes.map((note, i) => (
+                  <li className={s.noteItem} key={i}>
+                    <p className={s.noteNumb}>{i + 1 + '.'}</p>
+                    <Input
+                      value={note}
+                      id={`note_${i}`}
+                      className={s.inputWrap}
+                      clearInput={() => delNote(i)}
+                      handleChange={(val) => changeNote(i, val)}
+                    />
+                  </li>
+                ))}
+              </ul>
+              <form className={s.form} onSubmit={(e) => addNote(e)}>
+                <Input
+                  id="addNote"
+                  value={noteInput}
+                  className={s.inputWrap}
+                  placeholder="Добавить заметку..."
+                  clearInput={() => setNoteInput('')}
+                  handleChange={(val) => isString(val) && setNoteInput(val)}
+                />
+                <Button
+                  icon={plusIcon}
+                  className={s.btnSend}
+                  title={'Добавить в заметки'}
+                />
+              </form>
+            </div>
+          </Popup>
+        )}
+      </div>
+    </>
   );
 };
 

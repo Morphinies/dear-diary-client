@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Select from '../../components/select/Select';
 import Button from '../../components/button/Button';
 import { logout } from '../../store/auth/actionCreators';
+import Header from '../../components/header/Header';
 
 const Settings = () => {
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ const Settings = () => {
 
   return (
     <>
+      <Header title="Настройки" />
       <div className={s.settings}>
         <Select
           listId="theme"

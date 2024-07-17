@@ -7,11 +7,17 @@ import { useParams } from 'react-router-dom';
 import NotesEditPopup from './SListEditPopup';
 import plusIcon from '../../assets/icons/plusIcon';
 import Loader from '../../components/loader/Loader';
-import { SListItemType, SListItemEditType } from '../../types/types';
+import {
+  SListItemType,
+  SListItemEditType,
+  MenuItemType,
+} from '../../types/types';
+import Header from '../../components/header/Header';
 
 const SList = () => {
   const { menuId } = useParams();
   const [loading, setLoading] = useState(false);
+  const [menu, setMenu] = useState<MenuItemType>();
   const [list, setList] = useState<SListItemType[]>([]);
   const [editedNote, setEditedNote] = useState<SListItemEditType>();
   const [sortedNotes, setSortedNotes] = useState<SListItemType[]>([]);
@@ -24,6 +30,10 @@ const SList = () => {
     if (!menuId) return;
     setLoading(true);
     const data = await api.sList.getList(menuId);
+    const menu = await api.menu.getItem(menuId);
+    if (menu) {
+      setMenu(menu);
+    }
     if (isArray(data)) {
       setList([...data]);
     } else {
@@ -98,35 +108,49 @@ const SList = () => {
     setEditedNote(undefined);
   };
 
+  const getTitle = () => {
+    if (loading) {
+      return '';
+    }
+    if (menu) {
+      return menu.name;
+    } else {
+      return 'Список';
+    }
+  };
+
   return (
-    <div className={s.list}>
-      <div className={s.notesMain}>
-        {loading ? (
-          <Loader className={s.notesListLoader} />
-        ) : (
-          <ul className={s.notesList}>
-            <button
-              onClick={() => addItem()}
-              className={s.noteItem + ' ' + s.btnAdd}
-            >
-              {plusIcon}
-            </button>
-            {sortedNotes.map((note, i) => (
-              <NotesItem key={i} setEditedNote={setEditedNote} note={note} />
-            ))}
-            {editedNote && (
-              <NotesEditPopup
-                save={save}
-                delNote={delNote}
-                closePopup={closePopup}
-                editedNote={editedNote}
-                changeNote={changeNote}
-              />
-            )}
-          </ul>
-        )}
+    <>
+      <Header title={getTitle()} />
+      <div className={s.list}>
+        <div className={s.notesMain}>
+          {loading ? (
+            <Loader className={s.notesListLoader} />
+          ) : (
+            <ul className={s.notesList}>
+              <button
+                onClick={() => addItem()}
+                className={s.noteItem + ' ' + s.btnAdd}
+              >
+                {plusIcon}
+              </button>
+              {sortedNotes.map((note, i) => (
+                <NotesItem key={i} setEditedNote={setEditedNote} note={note} />
+              ))}
+              {editedNote && (
+                <NotesEditPopup
+                  save={save}
+                  delNote={delNote}
+                  closePopup={closePopup}
+                  editedNote={editedNote}
+                  changeNote={changeNote}
+                />
+              )}
+            </ul>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

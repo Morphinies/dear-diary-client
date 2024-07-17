@@ -15,6 +15,7 @@ const DiagramDataList: FC<DiagramDataListPropsType> = ({
   setEditDataItem,
 }) => {
   const dataListRef = useRef<HTMLUListElement>(null);
+
   useEffect(() => {
     if (dataListRef.current) {
       dataListRef.current.scrollTop = dataListRef.current.scrollHeight;
