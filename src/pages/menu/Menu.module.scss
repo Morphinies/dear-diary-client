@@ -1,6 +1,6 @@
 @import '../../style/const.scss';
 
-.menu {
+.menuWrap {
   gap: 2rem;
   display: flex;
   flex-direction: column;
@@ -12,17 +12,17 @@
   }
 }
 
-.serviceList {
+.menuList {
   gap: 0.5rem;
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(4, 1fr);
-  .service {
+  .menuItem {
     color: var(--font-color-transp);
   }
 }
 
-.service {
+.menuItem {
   gap: 1rem;
   display: flex;
   height: 200px;
@@ -87,6 +87,7 @@
 }
 
 .formChooseMenuType {
+  gap: 1rem;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   .menuTypeBtn {
@@ -152,10 +153,10 @@
 }
 
 @media (hover) {
-  .serviceList .service:hover {
+  .menuList .menuItem:hover {
     color: var(--font-color);
   }
-  .service:hover {
+  .menuItem:hover {
     border-color: var(--font-color);
     .btnEdit {
       opacity: 1;

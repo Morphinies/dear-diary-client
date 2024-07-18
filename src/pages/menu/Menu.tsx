@@ -1,28 +1,18 @@
 import api from '../../api';
 import s from './Menu.module.scss';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import plusIcon from '../../assets/icons/plusIcon';
 import listIcon from '../../assets/icons/listIcon';
 import editIcon from '../../assets/icons/editIcon';
 import EditMenuItemPopup from './EditMenuItemPopup';
 import Header from '../../components/header/Header';
-import { NavLink, useNavigate } from 'react-router-dom';
-import calendarIcon from '../../assets/icons/calendarIcon';
 import { MenuItemEditType, MenuItemType } from '../../types/types';
-
-type serviceType = {
-  id: number;
-  name: string;
-  route: string;
-  icon: JSX.Element;
-  iconClass?: string;
-};
 
 const Menu = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [menuList, setMenuList] = useState<MenuItemType[]>([]);
-  // const [listsList, setListsList] = useState<ListPageType[]>([]);
   const [editingMenu, setEditingMenu] = useState<MenuItemEditType>();
   const [defaultMenu] = useState<MenuItemEditType>({
     id: null,
@@ -31,16 +21,6 @@ const Menu = () => {
     icon: '',
     typeId: null,
   });
-
-  const [serviceList] = useState<serviceType[]>([
-    {
-      id: 3,
-      name: 'Календарь',
-      icon: calendarIcon,
-      route: '/calendar',
-      iconClass: s.calendarIcon,
-    },
-  ]); //setServices
 
   const getMenuList = async () => {
     setLoading(true);
@@ -88,6 +68,8 @@ const Menu = () => {
         return `/diagram/${menuItem.id}`;
       case 4:
         return `/schedule/${menuItem.id}`;
+      case 5:
+        return `/calendar/${menuItem.id}`;
       default:
         return '';
     }
@@ -96,49 +78,13 @@ const Menu = () => {
   return (
     <>
       <Header title="Дорогой дневник" />
-      <div className={s.menu}>
+      <div className={s.menuWrap}>
         <div className={s.menuChapter}>
           {!loading && (
-            <div className={s.serviceList}>
-              {serviceList.map((service, i) => (
-                <NavLink className={s.service} to={service.route} key={i}>
-                  <div className={s.iconWrap + ' ' + (service.iconClass ?? '')}>
-                    {service.icon}
-                  </div>
-                  <p className={s.name}>{service.name}</p>
-                </NavLink>
-              ))}
-              {/* {listsList.map((list, i) => (
-              <button
-                className={s.service}
-                onClick={() => navigate(`/list/${list.id}`)}
-                key={i}
-              >
-                <div className={s.iconWrap}>
-                  {list.icon ? (
-                    <img
-                      src={process.env.REACT_APP_API_URI + list.icon}
-                      alt=""
-                    />
-                  ) : (
-                    listIcon
-                  )}
-                </div>
-                <p className={s.name}>{list.name}</p>
-                <span
-                  className={s.btnEdit}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    // setEditingMenu(list);
-                  }}
-                >
-                  {editIcon}
-                </span>
-              </button>
-            ))} */}
+            <div className={s.menuList}>
               {menuList.map((item, i) => (
                 <button
-                  className={s.service}
+                  className={s.menuItem}
                   onClick={() => navigate(getMenuLink(item))}
                   key={i}
                 >
@@ -165,9 +111,8 @@ const Menu = () => {
                 </button>
               ))}
               <button
+                className={s.menuItem + ' ' + s.add}
                 onClick={() => setEditingMenu(defaultMenu)}
-                className={s.service + ' ' + s.add}
-                // onClick={() => setListToUpdate(true)}
               >
                 <div className={s.iconWrap}>{plusIcon}</div>
               </button>

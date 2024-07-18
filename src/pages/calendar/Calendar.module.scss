@@ -1,7 +1,9 @@
 @import '../../style/const.scss';
 
-.calendar {
-  margin-top: 2rem;
+.calendarWrap {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .form {
@@ -43,6 +45,20 @@
 
 .inputWrap {
   width: 100%;
+}
+
+.settings {
+  @extend .pageSettings;
+  justify-content: space-between;
+  // .selectSortList {
+  //   right: 0;
+  // }
+  .left,
+  .right {
+    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
 }
 
 @media (hover) {

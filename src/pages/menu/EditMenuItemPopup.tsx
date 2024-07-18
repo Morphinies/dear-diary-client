@@ -8,6 +8,7 @@ import notesIcon from '../../assets/icons/notesIcon';
 import tasksIcon from '../../assets/icons/tasksIcon';
 import formValidator from '../../utils/formValidator';
 import InputImg from '../../components/Input/InputImg';
+import calendarIcon from '../../assets/icons/calendarIcon';
 import { MenuItemEditType, MenuItemType } from '../../types/types';
 import pieChartIcon from '../../assets/icons/diagrams/pieChartIcon';
 import chartLineIcon from '../../assets/icons/diagrams/chartLineIcon';
@@ -55,6 +56,12 @@ const EditMenuItemPopup = ({
       icon: chartLineIcon,
       iconStyle: s.iconStroke,
     },
+    {
+      id: 5,
+      name: 'Календарь',
+      icon: calendarIcon,
+      iconStyle: s.iconStroke,
+    },
   ]);
   const [errors, setErrors] = useState<any>({
     name: '',
@@ -93,6 +100,8 @@ const EditMenuItemPopup = ({
       menuTypeName = 'Диаграмма ' + menuData.name;
     } else if (activeMenuType.id === 4) {
       menuTypeName = 'График ' + menuData.name;
+    } else if (activeMenuType.id === 5) {
+      menuTypeName = 'Календарь ' + menuData.name;
     }
 
     if (jsonEqual(menuItem, menuData)) {
@@ -124,6 +133,8 @@ const EditMenuItemPopup = ({
       menuTypeName = 'Диаграмма ' + menuData.name;
     } else if (activeMenuType.id === 4) {
       menuTypeName = 'График ' + menuData.name;
+    } else if (activeMenuType.id === 5) {
+      menuTypeName = 'Календарь ' + menuData.name;
     }
     const deletedItemId = await api.menu.del(itemId);
     if (deletedItemId) {

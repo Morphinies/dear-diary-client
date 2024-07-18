@@ -11,10 +11,10 @@ import Error from './pages/error/Error';
 import SList from './pages/s_list/SList';
 import { createRoot } from 'react-dom/client';
 import Finance from './pages/finance/Finance';
-import Settings from './pages/settings/Settings';
-import CalendarPage from './pages/calendarPage/CalendarPage';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Diagram from './pages/diagram/Diagram';
+import Settings from './pages/settings/Settings';
+import Calendar from './pages/calendar/Calendar';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
   {
@@ -34,10 +34,6 @@ const router = createBrowserRouter([
         element: <Finance />,
       },
       {
-        path: 'calendar',
-        element: <CalendarPage />,
-      },
-      {
         path: 'list/:menuId',
         element: <List />,
       },
@@ -48,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: 'diagram/:menuId',
         element: <Diagram />,
+      },
+      {
+        path: 'calendar/:menuId',
+        element: <Calendar />,
       },
     ],
   },

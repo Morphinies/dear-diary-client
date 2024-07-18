@@ -74,7 +74,7 @@ const Header = ({ title }: { title?: string }) => {
         </div> */}
       </div>
 
-      {title && <h1 className={'text-center'}>{title}</h1>}
+      {title && <h1 className={s.title}>{title}</h1>}
 
       <NavLink
         to={'/settings'}
