@@ -11,7 +11,7 @@ const NotesItem: FC<notesItemType> = ({ setEditedNote, note }) => {
   return (
     <li onClick={() => setEditedNote(note)} className={s.noteItem}>
       <h2 className={s.title}>{note.text}</h2>
-      <p className={s.title}>{note.desc}</p>
+      <p className={s.text}>{note.desc}</p>
     </li>
   );
 };

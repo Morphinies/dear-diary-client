@@ -1,14 +1,30 @@
 @import '../../style/const.scss';
 
 .form {
-  gap: 1.5rem;
+  gap: 1rem;
   display: flex;
-  margin-top: 2rem;
+  margin-top: 1rem;
   flex-direction: column;
+}
+
+.title {
+  text-align: center;
 }
 
 .popupWindow {
   max-width: 500px !important;
+}
+
+.textUnderForm {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--font-color-transp);
+  button {
+    font-size: 0.875rem;
+    color: var(--font-color-transp);
+    text-decoration: underline;
+  }
 }
 
 .btnSubmitWrap {
@@ -18,8 +34,11 @@
   flex-direction: column;
   .btnSubmit {
     margin: 0 auto;
+    // margin-top: 0.5rem;
+    // min-width: 282px;
     padding-left: 4rem;
     padding-right: 4rem;
+    justify-content: center;
   }
   .error {
     text-align: center;

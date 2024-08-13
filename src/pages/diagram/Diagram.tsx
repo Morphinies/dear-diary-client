@@ -1,7 +1,7 @@
 import {
   DiagramSettingsListType,
   DiagramActiveSettingsType,
-  MenuItemType,
+  // MenuItemType,
 } from '../../types/types';
 import api from '../../api';
 import s from './Diagram.module.scss';
@@ -18,7 +18,7 @@ import pieChartTypeBIcon from '../../assets/icons/diagrams/pieChartTypeBIcon';
 const Diagram = () => {
   const { menuId } = useParams();
   const [loading, setLoading] = useState(true);
-  const [menu, setMenu] = useState<MenuItemType>();
+  // const [menu, setMenu] = useState<MenuItemType>();
   const [editChapter, setEditChapter] = useState<any>();
   const [editCategory, setEditCategory] = useState<any>();
   const [defCategory] = useState({ name: 'Все категории', id: '1' });
@@ -64,13 +64,11 @@ const Diagram = () => {
 
   const getChapterList = async (menuId: string) => {
     setLoading(true);
-
     const data = await api.diagram.getChapterList(menuId);
-    const menu = await api.menu.getItem(menuId);
-    if (menu) {
-      setMenu(menu);
-    }
-
+    // const menu = await api.menu.getItem(menuId);
+    // if (menu) {
+    //   setMenu(menu);
+    // }
     if (data) {
       changeSettingsList('chapters', [...data]);
       changeActiveSettings('chapter', data[0] || {});
@@ -82,6 +80,7 @@ const Diagram = () => {
     if (activeSettings.chapter.id) {
       getCategoryList(activeSettings.chapter.id);
     }
+    // eslint-disable-next-line
   }, [activeSettings.chapter]);
 
   useEffect(() => {
@@ -90,6 +89,7 @@ const Diagram = () => {
     } else {
       console.log('menuId not found');
     }
+    // eslint-disable-next-line
   }, [menuId]);
 
   const updateCategoryList = (cat: any, key: string) => {

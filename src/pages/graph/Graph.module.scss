@@ -11,9 +11,11 @@ $colors: (
   8: var(--8),
 );
 
-.finance {
-  // margin-bottom: 300px;
+.graphWrap {
   margin-bottom: 50px;
+}
+
+.lineChart {
 }
 
 .main {
@@ -23,18 +25,51 @@ $colors: (
   grid-template-columns: 0.4fr 0.6fr;
 }
 
-.trans,
-.transListWrap {
+// settings
+
+.graphSettings {
+  @extend .pageSettings;
+  justify-content: space-between;
+  .graphSelectSortList {
+    right: 0;
+  }
+  .left,
+  .right {
+    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.settingsSelectList {
+  right: auto;
+  min-width: 100%;
+}
+
+// not updated
+
+.graphDataListWrap,
+.graphDataList {
   gap: 1rem;
   display: flex;
   flex-direction: column;
 }
 
-.transListWrap {
+.graphDataList {
   flex: 1;
 }
 
-.transList {
+.lineChartWrap {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.lineChart {
+  flex: 1;
+}
+
+.dataList {
   flex: 1;
   gap: 0.5rem;
   display: flex;
@@ -50,11 +85,11 @@ $colors: (
   @extend .scroll;
 }
 
-.transItem:first-child {
+.dataItem:first-child {
   margin-top: auto;
 }
 
-.transItem {
+.dataItem {
   gap: 1rem;
   display: flex;
   padding: 0.5rem;
@@ -63,8 +98,8 @@ $colors: (
   justify-content: space-between;
   border-left: 2px solid var(--font-color-transp);
 }
-.transItemRight,
-.transItemLeft {
+.dataItemRight,
+.dataItemLeft {
   gap: 0.5rem;
   display: flex;
   flex-direction: column;
@@ -73,16 +108,11 @@ $colors: (
   }
 }
 
-.transItemRight {
+.dataItemRight {
   align-items: flex-end;
 }
 
-.settingsSelectList {
-  right: auto;
-  min-width: 100%;
-}
-
-.transSelect {
+.dataItemSelect {
   flex: 1;
   &:hover button,
   button {
@@ -90,7 +120,7 @@ $colors: (
   }
 }
 
-.inputTransDate {
+.dataItemDateInput {
   div {
     border-color: var(--transp-x3);
   }
@@ -139,15 +169,11 @@ $colors: (
   margin-top: 0;
 }
 
-.btnAddTrans {
+.btnAddDataItem {
   width: 100%;
   transition: $trans;
   justify-content: center;
   // animation: $appearance;
-}
-
-.btnAddTransWrap {
-  overflow: hidden;
 }
 
 .transInputMid,
@@ -156,13 +182,13 @@ $colors: (
   gap: 0.5rem;
 }
 
-.transDescInput {
+.dataItemDescInput {
   div {
     border-color: var(--transp-x3);
   }
 }
 
-.transInput {
+.categoryNameInput {
   flex: 1;
   div {
     border-color: var(--transp-x3);
@@ -174,7 +200,7 @@ $colors: (
   display: flex;
   margin-top: 1rem;
 }
-.transCatInput {
+.chapterNameInput {
   flex: 1;
 }
 
@@ -198,20 +224,6 @@ $colors: (
   }
 }
 
-.financeSettings {
-  @extend .pageSettings;
-  justify-content: space-between;
-  .finSelectSortList {
-    right: 0;
-  }
-  .left,
-  .right {
-    gap: 0.5rem;
-    display: flex;
-    align-items: center;
-  }
-}
-
 .selectSwitcher {
   button {
     border: none;
@@ -225,32 +237,28 @@ $colors: (
   }
 }
 
-.finTransPopupForm {
+.dataItemPopupForm {
   gap: 0.5rem;
   display: flex;
   margin-top: 2rem;
   flex-direction: column;
 }
 
-// transPeriod
-.transPeriod {
+.lineChartDataPeriod {
   display: flex;
-  min-height: 85px;
   align-items: center;
-  flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
-.transPeriodTitleWrap {
+.diagramPeriodTitleWrap {
   gap: 2rem;
   display: flex;
-  margin-top: 1rem;
   min-width: 270px;
   align-items: center;
   justify-content: space-between;
 }
 
-// .transPeriodTitle {
+// .diagramPeriodTitle {
 // }
 
 .secondary {
@@ -274,7 +282,7 @@ $colors: (
   gap: 2rem;
   width: 100%;
   display: grid;
-  cursor: default;
+  cursor: pointer;
   transition: $trans;
   position: relative;
   grid-template-columns: 1fr 1fr;
@@ -288,19 +296,25 @@ $colors: (
     justify-self: flex-end;
   }
   .circle {
+    top: 1px;
     width: 1rem;
     left: -2rem;
     height: 1rem;
     position: absolute;
     border-radius: 100px;
   }
-  &.summaryTotal {
+  &.summaryTotal .circle {
+    background-color: #fff;
+  }
+  &.active {
     border-color: var(--font-color);
   }
 }
 
 // pie chart
 .summaryList {
+  width: 300px;
+  max-width: 100%;
   .summaryItem:not(.summaryTotal) {
     @each $index, $color in $colors {
       &:nth-child(#{$index + 1}) {
@@ -321,7 +335,7 @@ $colors: (
 }
 
 @media (hover) {
-  .transItem:hover {
+  .dataItem:hover {
     border-color: var(--primary);
     background-color: var(--transp);
   }
@@ -330,7 +344,7 @@ $colors: (
     color: var(--font-color);
   }
 
-  .summaryItem:not(.summaryTotal):hover {
+  .summaryItem:hover {
     border-color: var(--font-color-transp);
   }
 
@@ -338,5 +352,38 @@ $colors: (
     button {
       border-bottom: 1px solid var(--font-color-transp) !important;
     }
+  }
+}
+
+@media (max-width: 700px) {
+  .graphSettings {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .main {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .lineChart {
+    height: 100%;
+    min-height: 300px;
+    max-height: 300px;
+    width: 100%;
+    svg {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+  .dataList {
+    max-height: 300px;
+    min-height: 300px;
+  }
+  .popupAddCategory,
+  .popupWindow {
+    justify-content: flex-start;
+  }
+  .summaryList {
+    width: 100%;
+    padding-left: 2rem;
   }
 }

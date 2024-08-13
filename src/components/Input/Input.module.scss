@@ -8,11 +8,11 @@
 .inputWrap,
 .textareaWrap {
   display: flex;
+  min-height: 44px;
   position: relative;
   border-radius: $rad;
   transition: $trans;
-  min-height: 44px;
-  border: 1px solid var(--transp-x3);
+  border: 1px solid var(--border);
   @extend .lightBlock;
   path {
     stroke: var(--font-color-transp);
@@ -28,8 +28,8 @@
     }
   }
   &.focus {
-    border-color: var(--transp);
     backdrop-filter: blur(8px);
+    border-color: var(--border-active);
     background-color: var(--transp-x2);
   }
 }
@@ -108,7 +108,7 @@ input[type='date'] {
     align-items: center;
     justify-content: center;
     background-color: var(--transp-x3);
-    border: 2px dashed var(--transp-x2);
+    border: 2px dashed var(--border);
     &:hover {
       background-color: var(--transp-x2);
     }

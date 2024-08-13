@@ -16,24 +16,53 @@
   // height: 100dvh;
 }
 
+.content {
+  z-index: 2;
+}
+
+.loading .window .content *,
+.loading .window .header * {
+  visibility: hidden;
+  transition: none;
+}
+
+.header {
+  gap: 1rem;
+}
+
 .window {
+  gap: 1rem;
   width: 700px;
   padding: 1rem;
   display: flex;
   max-width: 80vw;
   position: relative;
-  // overflow: hidden;
+  overflow: visible;
   border-radius: $rad;
   flex-direction: column;
   box-shadow: $boxShadow;
   color: var(--font-color);
+  border: 1px solid var(--border);
   background-color: var(--main-color);
-  background-image: var(--bg-pattern);
+  // background-image: var(--bg-pattern);
+  @extend .scroll;
   &.withMes {
+    cursor: default;
+    pointer-events: none;
     .content,
     .header {
       opacity: 0;
     }
+  }
+  &::before {
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.3;
+    position: absolute;
+    background-image: var(--bg-pattern);
   }
 }
 
@@ -54,6 +83,7 @@
 
 .header {
   padding: 0;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -68,5 +98,25 @@
 .delBtn {
   path {
     fill: none !important;
+  }
+}
+
+.loading {
+}
+
+@media (max-width: 700px) {
+  .popup {
+    align-items: stretch;
+  }
+  .window {
+    gap: 2rem;
+    max-width: 100%;
+    border-radius: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1.5rem 1rem;
+    justify-content: center;
+    box-shadow: var(--main-color) 3px 3px 6px 0px inset,
+      var(--main-color) -3px -3px 6px 1px inset;
   }
 }

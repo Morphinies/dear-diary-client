@@ -11,7 +11,7 @@ const Settings = () => {
 
   const [themeList] = useState<string[]>([
     //, setThemeList
-    // 'light',
+    'light',
     'dark',
     // 'blue',
   ]);

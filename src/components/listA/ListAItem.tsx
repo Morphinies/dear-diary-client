@@ -54,16 +54,27 @@ const ListAItem: FC<ListAItemType> = ({
     >
       <ButtonDraggable provided={provided} className={s.btnDraggable} />
       <p className={s.text}>{item.text}</p>
-      <p title="Оставшееся время" className={s.time}>
-        {remainingTime(item.deadline)}
+      <p
+        title="Оставшееся время"
+        className={
+          s.time +
+          ' ' +
+          (item.isCompleted
+            ? s.completed
+            : remainingTime(item.deadline).startsWith('-')
+            ? s.expired
+            : '')
+        }
+      >
+        {item.isCompleted ? 'Выполнено' : remainingTime(item.deadline)}
       </p>
       <div className={'row ' + s.itemMenu__wrap} ref={itemMenuRef}>
         <div className={s.itemMenu + ' ' + (itemMenuOpened ? s.opened : '')}>
           <Button
             icon={editIcon}
             title="Редактировать"
-            handleClick={() => edit(item.id)}
             className={s.btnEdit}
+            handleClick={() => edit(item.id)}
           />
           {complete && (
             <Button

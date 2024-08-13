@@ -3,9 +3,9 @@ import s from './Main.module.scss';
 import { useDispatch } from 'react-redux';
 import { getThemes } from '../../utils/getThemes';
 import { useAppSelector } from '../../hooks/hooks';
-import Header from '../../components/header/Header';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { checkAuth } from '../../store/auth/actionCreators';
+import Footer from '../../components/footer/Footer';
 
 const Main = () => {
   const navigate = useNavigate();
@@ -25,7 +25,12 @@ const Main = () => {
     // eslint-disable-next-line
   }, []);
 
-  return <div className={s.main}>{isActivated && <Outlet />}</div>;
+  return (
+    <div className={s.main}>
+      {isActivated && <Outlet />}
+      <Footer />
+    </div>
+  );
 };
 
 export default Main;

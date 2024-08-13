@@ -1,18 +1,24 @@
 import axios from 'axios';
+import { store } from '../store';
 import Endpoints from './endpoints';
+import { getAccessToken } from '../store/auth/actionCreators';
 
 export const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-const urlsSkipAuth = [Endpoints.AUTH.LOGIN, Endpoints.AUTH.REGISTR];
+const urlsSkipAuth = [
+  Endpoints.AUTH.LOGIN,
+  Endpoints.AUTH.REGISTR,
+  Endpoints.AUTH.REFRESH,
+];
 
 axiosInstance.interceptors.request.use(
   async (config: any) => {
     if (config.url && urlsSkipAuth.includes(config.url)) {
       return config;
     }
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = await (store.dispatch as any)(getAccessToken());
     if (accessToken) {
       config.headers = {
         authorization: `Bearer ${accessToken}`,
@@ -39,12 +45,12 @@ axiosInstance.interceptors.response.use(
     ) {
       originalRequest._isRetry = true;
       try {
+        console.log('originalRequest', originalRequest);
+        console.log('parsed ', originalRequest.data);
         const res = await axios.get(Endpoints.AUTH.REFRESH, {
           withCredentials: true,
         });
         localStorage.setItem('accessToken', res.data.accessToken);
-        console.log(originalRequest.data);
-        console.log('parsed ', JSON.parse(originalRequest.data));
         return axiosInstance.request({
           ...originalRequest,
           data: JSON.parse(originalRequest.data),

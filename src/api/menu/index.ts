@@ -3,9 +3,13 @@ import Endpoints from '../endpoints';
 import { axiosInstance } from '../instance';
 import { MenuItemEditType, MenuItemType } from '../../types/types';
 
-async function getList(): Promise<any> {
+async function getList(typeId?: number): Promise<MenuItemType[] | undefined> {
   try {
-    const res: any = await axiosInstance.get(Endpoints.MENU.GET_LIST, {});
+    const res: any = await axiosInstance.get(Endpoints.MENU.GET_LIST, {
+      params: {
+        typeId,
+      },
+    });
     if (res && res.data) {
       return res.data;
     } else {

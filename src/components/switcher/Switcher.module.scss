@@ -3,6 +3,10 @@
 .switcher {
   width: 100%;
   display: flex;
+  overflow: hidden;
+  border-radius: $rad;
+  border: 1px solid var(--border);
+  background-color: var(--transp-x3);
   &.mini {
     .item {
       font-size: 0.875rem;
@@ -14,9 +18,10 @@
   width: 100%;
   padding: 0.75rem;
   color: var(--font-color-transp);
-  border-bottom: 1px solid var(--font-color-transp);
+  // background-color: var(--transp-x3);
+  border-bottom: 1px solid transparent;
   &.active {
-    color: var(--font-color);
-    border-color: var(--font-color);
+    color: var(--primary);
+    border-color: var(--primary);
   }
 }

@@ -8,6 +8,11 @@ $fastTrans: all 0.05s ease-in-out;
 
 $rad: 5px;
 
+$danger: #eb0d0d;
+$success: #11c523;
+$warning: #ebd50d;
+$orange: #eb880d;
+
 $important1: #ff5252;
 $important2: #0bb2ff;
 $important3: #86ff5e;
@@ -43,6 +48,7 @@ $appearance: 1s 1 alternate appearance;
   gap: 0.5rem;
   display: flex;
   font-weight: 500;
+  // min-width: 44px;
   min-height: 44px;
   transition: $trans;
   width: max-content;
@@ -50,7 +56,7 @@ $appearance: 1s 1 alternate appearance;
   align-items: center;
   padding: 0.75rem 1.5rem;
   color: var(--font-color-transp);
-  border: 1px solid var(--transp-x3);
+  border: 1px solid var(--border);
   svg {
     width: 1.6rem;
     height: 1.6rem;
@@ -64,7 +70,7 @@ $appearance: 1s 1 alternate appearance;
     stroke: var(--font-color-transp);
   }
   &:active {
-    border-color: var(--font-color);
+    border-color: var(--border-active);
     color: var(--font-color);
     polygon,
     path {
@@ -153,6 +159,7 @@ $appearance: 1s 1 alternate appearance;
   display: flex;
   // margin-top: 2rem;
   align-items: center;
+  white-space: nowrap;
   .selectSortList {
     right: auto;
   }
@@ -167,7 +174,7 @@ $appearance: 1s 1 alternate appearance;
   .btn:active,
   .btn:hover {
     color: var(--font-color);
-    border-color: var(--transp);
+    border-color: var(--border-active);
     polygon,
     path {
       fill: var(--font-color);
@@ -195,7 +202,8 @@ $appearance: 1s 1 alternate appearance;
   .inputWrap {
     button:hover {
       path {
-        stroke: $lightColor;
+        // stroke: $lightColor;
+        stroke: var(--font-color);
       }
     }
   }
@@ -219,5 +227,23 @@ $appearance: 1s 1 alternate appearance;
   }
   .lightBlock:hover {
     background-color: var(--transp-x2);
+  }
+}
+@media (max-width: 700px) {
+  div.pageSettings {
+    // overflow-x: auto;
+    // overflow-y: visible;
+    // align-items: flex-start;
+    // flex-direction: column;
+    justify-content: flex-start;
+  }
+  .btn {
+    min-width: 40px;
+    min-height: 40px;
+    justify-content: center;
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
   }
 }

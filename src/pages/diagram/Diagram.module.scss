@@ -18,7 +18,7 @@ $colors: (
 .main {
   gap: 2rem;
   display: grid;
-  margin-top: 2rem;
+  margin-top: 1rem;
   grid-template-columns: 0.4fr 0.6fr;
 }
 
@@ -62,8 +62,8 @@ $colors: (
   display: flex;
   // height: 370px;
   overflow-y: auto;
-  min-height: 506px;
   max-height: 506px;
+  min-height: 506px;
   border-radius: $rad;
   flex-direction: column;
   border: 1px solid var(--transp-x3);
@@ -185,7 +185,6 @@ $colors: (
 .popupAddCategoryContent {
   gap: 1rem;
   display: flex;
-  margin-top: 1rem;
 }
 .chapterNameInput {
   flex: 1;
@@ -227,7 +226,6 @@ $colors: (
 .dataItemPopupForm {
   gap: 0.5rem;
   display: flex;
-  margin-top: 2rem;
   flex-direction: column;
 }
 
@@ -339,5 +337,37 @@ $colors: (
     button {
       border-bottom: 1px solid var(--font-color-transp) !important;
     }
+  }
+}
+
+@media (max-width: 700px) {
+  .main {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .barChart,
+  .pieChart {
+    height: 300px;
+    width: 100%;
+    svg {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+  .dataList {
+    max-height: 300px;
+    min-height: 300px;
+  }
+  .popupAddCategory,
+  .popupWindow {
+    justify-content: flex-start;
+  }
+  .summaryList {
+    width: 100%;
+    padding-left: 2rem;
+  }
+  .diagramSettings {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }

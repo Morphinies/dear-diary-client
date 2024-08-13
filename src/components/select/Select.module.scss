@@ -10,12 +10,13 @@
   left: 0;
   right: 0;
   height: 0;
+  z-index: 4;
   min-width: 100%;
   overflow: hidden;
   transition: $trans;
   position: absolute;
   border-radius: $rad;
-  border: 1px solid transparent;
+  border: 0 solid transparent;
 }
 .list {
   margin: 4px 2px;
@@ -80,9 +81,9 @@
 .selected {
   padding-right: 0.5rem;
   @extend .btn;
-  color: var(--font-color-transp);
-  border-color: var(--transp-x3);
+  border-color: var(--border);
   justify-content: space-between;
+  color: var(--font-color-transp);
   &.icon {
     padding: 0.25rem 0.75rem;
   }
@@ -101,7 +102,7 @@
   &.sort {
     .selected {
       color: var(--font-color);
-      border-color: var(--transp);
+      border-color: var(--border-active);
       path {
         fill: none;
         stroke: var(--font-color);
@@ -111,7 +112,7 @@
   .selected {
     color: var(--font-color);
     backdrop-filter: blur(10px);
-    border-color: var(--transp);
+    border-color: var(--border-active);
     background-color: var(--transp-x2);
   }
   .arrow {
@@ -120,11 +121,11 @@
     }
   }
   .listWrap {
-    z-index: 99;
     margin-top: 10px;
-    backdrop-filter: blur(10px);
-    border-color: var(--transp);
-    background-color: var(--transp-x3);
+    border-width: 1px;
+    // backdrop-filter: blur(10px);
+    border-color: var(--border-active);
+    background-color: var(--main-color);
   }
 }
 
@@ -134,7 +135,7 @@
       fill: var(--font-color-transp);
     }
     color: var(--font-color-transp);
-    border-color: var(--transp-x3);
+    border-color: var(--border);
   }
 }
 .topLabel {
@@ -184,13 +185,13 @@
 
 @media (hover) {
   .selected:hover {
-    border-color: var(--transp);
+    border-color: var(--border-active);
   }
   .opened .selected:hover {
-    border-color: var(--transp);
+    border-color: var(--border-active);
   }
   .btnAdd:hover {
-    border-color: var(--transp) !important;
+    border-color: var(--border-active) !important;
   }
   .btnEdit:hover {
     polygon,
@@ -208,7 +209,7 @@
   // }
   .sort .selected:hover {
     color: var(--font-color);
-    border-color: var(--transp);
+    border-color: var(--border-active);
     path {
       fill: var(--font-color);
       stroke: var(--font-color);
@@ -217,17 +218,12 @@
   .item {
     &:hover,
     &:active {
-      background-color: var(--transp-x2) !important;
+      // background-color: var(--transp-x2) !important;
+      background-color: var(--primary-transp) !important;
     }
-    &:hover:not(.active),
-    &:active:not(.active) {
+    &:hover,
+    &:active {
       color: var(--font-color);
-    }
-    &.active {
-      &:hover,
-      &:active {
-        color: var(--primary);
-      }
     }
     &.color {
       &:hover,
@@ -250,5 +246,20 @@
     path {
       fill: none;
     }
+  }
+}
+
+@media (max-width: 700px) {
+  .opened {
+    .listWrap {
+      margin-top: 0.5rem;
+    }
+  }
+  .item,
+  .selected {
+    padding: 0.75rem;
+  }
+  .btnAdd {
+    padding: 0.5rem 0.75rem;
   }
 }

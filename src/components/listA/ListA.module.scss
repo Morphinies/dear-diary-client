@@ -11,9 +11,11 @@
   overflow: hidden;
   border-radius: $rad;
   border: 1px solid transparent;
+  border: 1px solid var(--border);
   transition: all 0.5s ease-in-out;
   background-color: var(--font-color-transp-x2);
   button {
+    z-index: 2;
     border: none;
     background-color: transparent;
   }
@@ -25,27 +27,42 @@
     display: flex;
     cursor: default;
     box-shadow: none;
+    position: relative;
     align-items: center;
     color: var(--font-color-transp);
     border-left: 4px solid transparent;
     @extend .lightBlock;
+    &::before {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      content: '';
+      position: absolute;
+    }
   }
   li[data-color-id='1'] {
     border-color: $important1;
     &:active {
-      background-color: $important1Transp;
+      &::before {
+        background-color: $important1Transp;
+      }
     }
   }
   li[data-color-id='2'] {
     border-color: $important2;
     &:active {
-      background-color: $important2Transp;
+      &::before {
+        background-color: $important2Transp;
+      }
     }
   }
   li[data-color-id='3'] {
     border-color: $important3;
     &:active {
-      background-color: $important3Transp;
+      &::before {
+        background-color: $important3Transp;
+      }
     }
   }
 }
@@ -61,10 +78,17 @@
 
 .text {
   flex: 1;
+  padding: 0.5rem 0;
 }
 
 .time {
   flex-shrink: 0;
+  &.expired {
+    color: $danger;
+  }
+  &.completed {
+    color: $success;
+  }
 }
 
 .btnEdit {
@@ -109,6 +133,7 @@
   width: 0;
   height: 0;
   opacity: 0;
+  z-index: 2;
   display: flex;
   overflow: hidden;
   transition: $slowTrans;
@@ -122,7 +147,7 @@
   }
 }
 
-@media (hover) {
+@media (hover) and (min-width: 700px) {
   .list {
     button:hover {
       background-color: transparent;
@@ -190,18 +215,64 @@
     }
     li[data-color-id='1'] {
       &:hover {
-        background-color: $important1Transp;
+        &::before {
+          background-color: $important1Transp;
+        }
       }
     }
     li[data-color-id='2'] {
       &:hover {
-        background-color: $important2Transp;
+        &::before {
+          background-color: $important2Transp;
+        }
       }
     }
     li[data-color-id='3'] {
       &:hover {
-        background-color: $important3Transp;
+        &::before {
+          background-color: $important3Transp;
+        }
       }
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .list .item {
+    row-gap: 0;
+    display: grid;
+    column-gap: 0.5rem;
+    align-items: flex-start;
+    grid-template-columns: auto 1fr auto;
+  }
+  .btnDraggable {
+    grid-area: 1/1/3/2;
+  }
+  .text {
+    grid-area: 1/2/2/3;
+  }
+  .time {
+    grid-area: 2/2/3/3;
+    padding-bottom: 0.5rem;
+  }
+  .itemMenu__wrap {
+    grid-area: 1/3/4/4;
+    flex-direction: column-reverse;
+  }
+  .itemMenu {
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+    align-self: flex-end;
+    flex-direction: column;
+    button {
+      border-radius: $rad 0 0 $rad;
+      background-color: var(--transp);
+    }
+  }
+
+  .list:not(.withHandleSort) {
+    .item {
+      padding-left: 0;
     }
   }
 }

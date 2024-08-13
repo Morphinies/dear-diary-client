@@ -67,7 +67,7 @@ const Menu = () => {
       case 3:
         return `/diagram/${menuItem.id}`;
       case 4:
-        return `/schedule/${menuItem.id}`;
+        return `/graph/${menuItem.id}`;
       case 5:
         return `/calendar/${menuItem.id}`;
       default:

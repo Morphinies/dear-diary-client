@@ -6,8 +6,8 @@ import { configureStore } from '@reduxjs/toolkit';
 export const store = configureStore({
   reducer: {
     reg: regSlice,
-    login: loginSlice,
     user: userSlice,
+    login: loginSlice,
   },
 });
 

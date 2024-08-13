@@ -32,6 +32,21 @@ async function update(
   }
 }
 
+async function complete(id: string): Promise<string | undefined> {
+  try {
+    const res: any = await axiosInstance.post(Endpoints.LIST.COMPLETE_ITEM, {
+      id,
+    });
+    if (res && res.data) {
+      return res.data;
+    } else {
+      throw new Error('error');
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 async function updateSort(
   item: ListItemType
 ): Promise<ListItemType[] | undefined> {
@@ -64,97 +79,13 @@ async function del(item_id: string): Promise<string | undefined> {
     console.log(e);
   }
 }
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ old
-
-// async function getListsList(): Promise<ListPageType[] | undefined> {
-//   try {
-//     const res: any = await axiosInstance.get(Endpoints.LIST.GET_LISTS_LIST);
-//     if (res && res.data) {
-//       return res.data;
-//     } else {
-//       throw new Error('error');
-//     }
-//   } catch (e) {
-//     console.log(e);
-//   }
-// }
-
-// async function updateList(
-//   data: dataUpdateListPageType,
-//   oldIconName?: string | null
-// ): Promise<ListPageType | undefined> {
-//   try {
-//     if (
-//       (!data.icon || (data.icon && typeof data.icon === 'object')) &&
-//       oldIconName
-//     ) {
-//       const imgIsDeleted = await api.files.deleteFile(oldIconName.slice(15));
-//       if (!imgIsDeleted) {
-//         throw new Error('error deleting icon');
-//       }
-//     }
-//     if (data.icon && typeof data.icon === 'object') {
-//       const updatedImgUrl = await api.files.updateFile(data.icon);
-//       if (updatedImgUrl) {
-//         data.icon = updatedImgUrl;
-//       } else {
-//         throw new Error('error updating icon');
-//       }
-//     }
-//     const res: any = await axiosInstance.post(
-//       Endpoints.LIST.UPDATE_LIST,
-//       data
-//     );
-//     if (res && res.data) {
-//       return res.data;
-//     } else {
-//       throw new Error('error');
-//     }
-//   } catch (e) {
-//     console.log(e);
-//   }
-// }
-
-// async function deleteList(list_id: string): Promise<string | undefined> {
-//   try {
-//     const res: any = await axiosInstance.delete(Endpoints.LIST.DELETE_LIST, {
-//       params: { list_id },
-//     });
-//     if (res && res.data) {
-//       return res.data;
-//     } else {
-//       throw new Error('error');
-//     }
-//   } catch (e) {
-//     console.log(e);
-//   }
-// }
-
-// async function getItems(list_id: string) {
-//   try {
-//     const res: any = await axiosInstance.get(Endpoints.LIST.GET_ITEMS_LIST, {
-//       params: { list_id },
-//     });
-//     if (res && res.data) {
-//       return res.data;
-//     } else {
-//       throw new Error('error');
-//     }
-//   } catch (e) {
-//     console.log(e);
-//   }
-// }
 
 const list = {
   del,
   update,
   getList,
+  complete,
   updateSort,
-  // old
-  // getItems,
-  // deleteList,
-  // updateList,
-  // getListsList,
 };
 
 export default list;

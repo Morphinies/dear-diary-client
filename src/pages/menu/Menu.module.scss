@@ -16,7 +16,7 @@
   gap: 0.5rem;
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   .menuItem {
     color: var(--font-color-transp);
   }
@@ -36,15 +36,17 @@
   border: 1px solid var(--font-color-transp);
   @extend .lightBlock;
   &.add svg {
-    max-width: 50%;
-    max-height: 50%;
+    // max-width: 50%;
+    // max-height: 50%;
   }
 }
 
 .iconWrap {
   flex: 1;
-  width: 150px;
-  height: 90px;
+  width: 100%;
+  height: 100%;
+  max-width: 150px;
+  max-height: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,7 +91,7 @@
 .formChooseMenuType {
   gap: 1rem;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   .menuTypeBtn {
     gap: 1rem;
     display: flex;
@@ -184,5 +186,27 @@
         }
       }
     }
+  }
+}
+
+@media (max-width: 700px) {
+  div.editMenuItemPopup {
+    gap: 2rem;
+    max-width: 100%;
+    justify-content: flex-start;
+  }
+  .formChooseMenuType {
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+  .menuList {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+  .menuItem {
+    height: 142px;
+  }
+  .iconWrap {
+    max-width: 100px;
+    max-height: 60px;
   }
 }

@@ -13,7 +13,7 @@ export const isTokenExpired = (token: string) => {
     const { exp, iat } = JSON.parse(tokenInfoDecoded);
     const tokenLeftTime = exp - getUnixTime();
     const minLifeTimeForUpdate = (exp - iat) * LIFE_TIME_TO_UPDATE_MULTIPLIER;
-
+    // console.log(tokenLeftTime - minLifeTimeForUpdate);
     return tokenLeftTime < minLifeTimeForUpdate;
   } catch (e) {
     console.error(e);

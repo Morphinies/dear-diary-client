@@ -83,22 +83,18 @@ const Select: FC<SelectProps> = ({
   const getSelectedName = (): ReactNode => {
     if (!label) {
       if (typeof selectedItem === 'object') {
-        if (selectedItem.name) {
-          return selectedItem.name;
-        }
-        if (selectedItem.value) {
-          return selectedItem.value;
-        }
+        return (
+          selectedItem.name || selectedItem.value || selectedItem.text || ''
+        );
       } else {
         return selectedItem;
       }
     } else {
       if (typeof selectedItem === 'object') {
-        if (selectedItem.name) {
-          return label + ': ' + selectedItem.name;
-        }
-        if (selectedItem.value) {
-          return label + ': ' + selectedItem.value;
+        const selectedVal =
+          selectedItem.name || selectedItem.value || selectedItem.text;
+        if (selectedVal) {
+          return label + ': ' + selectedVal;
         } else {
           return label;
         }

@@ -89,7 +89,7 @@ async function checkAuth() {
 }
 
 async function refreshToken() {
-  axiosInstance.get(Endpoints.AUTH.REFRESH);
+  return await axiosInstance.get(Endpoints.AUTH.REFRESH);
 }
 
 const auth = {

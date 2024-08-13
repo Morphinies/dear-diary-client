@@ -69,26 +69,27 @@ export const getAccessToken =
   async (dispatch: any): Promise<string> => {
     try {
       let accessToken = localStorage.getItem('accessToken');
-      if (accessToken && isTokenExpired(accessToken)) {
-        if (!refreshTokenRequest) {
-          refreshTokenRequest = await api.auth.refreshToken();
-        }
+      if (accessToken && isTokenExpired(accessToken) && !refreshTokenRequest) {
+        refreshTokenRequest = await api.auth.refreshToken();
         if (refreshTokenRequest.data) {
-          // dispatch(userSet(refreshTokenRequest.data));
-          const jwt = refreshTokenRequest.data.jwt;
+          // dispatch(userSet(refreshTokenRequest.data.user));
+          dispatch(loginSuccess());
+          const jwt = refreshTokenRequest.data.accessToken;
           refreshTokenRequest = undefined;
           accessToken = jwt;
+          localStorage.setItem('accessToken', jwt);
         } else {
           throw new Error();
         }
       }
-      if (!accessToken) {
-        throw new Error();
-      } else {
+      if (accessToken) {
         return accessToken;
+      } else {
+        throw new Error();
       }
     } catch (err) {
       // console.error(err);
+      logout();
       return '';
     }
   };

@@ -1,4 +1,4 @@
-export const getFullDate = (date, withTime) => {
+export const getFullDate = (date: Date, withTime?: boolean) => {
   if (!date?.getDate()) return '';
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');

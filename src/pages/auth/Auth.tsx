@@ -1,6 +1,5 @@
 import s from './Auth.module.scss';
 import { useDispatch } from 'react-redux';
-import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Popup from '../../components/popup/Popup';
 import Input from '../../components/Input/Input';
@@ -8,7 +7,8 @@ import { getThemes } from '../../utils/getThemes';
 import { useAppSelector } from '../../hooks/hooks';
 import Button from '../../components/button/Button';
 import verification from '../../utils/verification';
-import Switcher from '../../components/switcher/Switcher';
+import { useEffect, useRef, useState } from 'react';
+// import Switcher from '../../components/switcher/Switcher';
 import {
   login,
   checkAuth,
@@ -23,7 +23,6 @@ const Auth = () => {
   const regSlice = useAppSelector((state) => state.reg);
   const userSlice = useAppSelector((state) => state.user);
   const loginSlice = useAppSelector((state) => state.login);
-  const [chapters] = useState(['Вход', 'Регистрация']);
   const [activeChapter, setActiveChapter] = useState<'Вход' | 'Регистрация'>(
     'Вход'
   );
@@ -147,65 +146,78 @@ const Auth = () => {
       >
         {!regSlice.waitingConfirm ? (
           <>
-            <Switcher
-              list={chapters}
-              activeItem={activeChapter}
-              handleActive={(chapt) => setActiveChapter(chapt)}
-            />
+            <h1 className={s.title}>
+              {activeChapter === 'Вход' ? 'Авторизация' : 'Регистрация'}
+            </h1>
             {activeChapter === 'Вход' && (
-              <form className={s.form} onSubmit={handleLogin}>
-                <Input
-                  id="loginemail"
-                  value={loginData.email}
-                  error={loginErrors.email}
-                  placeholder="Почта"
-                  handleChange={(val) =>
-                    handleChangeLoginData('email', String(val))
-                  }
-                />
-                <Input
-                  type="password"
-                  id="loginPassword"
-                  placeholder="Пароль"
-                  value={loginData.password}
-                  error={loginErrors.password}
-                  handleChange={(val) =>
-                    handleChangeLoginData('password', String(val))
-                  }
-                />
-                <div className={s.btnSubmitWrap}>
-                  <span className={s.error}>{loginErrors.req}</span>
-                  <Button text="Войти" className={s.btnSubmit} />
-                </div>
-              </form>
+              <>
+                <form className={s.form} onSubmit={handleLogin}>
+                  <Input
+                    id="loginemail"
+                    value={loginData.email}
+                    error={loginErrors.email}
+                    placeholder="Почта"
+                    handleChange={(val) =>
+                      handleChangeLoginData('email', String(val))
+                    }
+                  />
+                  <Input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Пароль"
+                    value={loginData.password}
+                    error={loginErrors.password}
+                    handleChange={(val) =>
+                      handleChangeLoginData('password', String(val))
+                    }
+                  />
+                  <div className={s.btnSubmitWrap}>
+                    <span className={s.error}>{loginErrors.req}</span>
+                    <Button text="Войти" className={s.btnSubmit} />
+                  </div>
+                </form>
+                <p className={s.textUnderForm}>
+                  Нет аккаунта?{' '}
+                  <button onClick={() => setActiveChapter('Регистрация')}>
+                    Зарегистрироваться
+                  </button>
+                </p>
+              </>
             )}
             {activeChapter === 'Регистрация' && (
-              //
-              <form className={s.form} onSubmit={handleRegistration}>
-                <Input
-                  id="regemail"
-                  value={regData.email}
-                  error={regErrors.email}
-                  placeholder="Почта"
-                  handleChange={(val) =>
-                    handleChangeRegData('email', String(val))
-                  }
-                />
-                <Input
-                  type="password"
-                  id="regPassword"
-                  placeholder="Пароль"
-                  value={regData.password}
-                  error={regErrors.password}
-                  handleChange={(val) =>
-                    handleChangeRegData('password', String(val))
-                  }
-                />
-                <div className={s.btnSubmitWrap}>
-                  <span className={s.error}>{regErrors.req}</span>
-                  <Button text="Зарегистрироваться" className={s.btnSubmit} />
-                </div>
-              </form>
+              <>
+                <form className={s.form} onSubmit={handleRegistration}>
+                  <Input
+                    id="regemail"
+                    value={regData.email}
+                    error={regErrors.email}
+                    placeholder="Почта"
+                    handleChange={(val) =>
+                      handleChangeRegData('email', String(val))
+                    }
+                  />
+                  <Input
+                    type="password"
+                    id="regPassword"
+                    placeholder="Пароль"
+                    value={regData.password}
+                    error={regErrors.password}
+                    handleChange={(val) =>
+                      handleChangeRegData('password', String(val))
+                    }
+                  />
+                  <div className={s.btnSubmitWrap}>
+                    <span className={s.error}>{regErrors.req}</span>
+                    <Button text="Зарегистрироваться" className={s.btnSubmit} />
+                  </div>
+                </form>
+                <p className={s.textUnderForm}>
+                  Есть аккаунт?{' '}
+                  <button onClick={() => setActiveChapter('Вход')}>
+                    Войти
+                  </button>
+                </p>
+              </>
             )}
           </>
         ) : (

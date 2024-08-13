@@ -1,39 +1,34 @@
 [theme='light'],
 :root {
-  --primary: #2e86de;
-  --main-color: #ffeaa7;
-  --sec-color: #fff;
-  --font-color: #242424;
-  --font-color-transp2: #2424241b;
-  --font-color-transp3: #2424242a;
-  --font-color-transp4: #2424243a;
+  --border: #bdbdbd;
+  --primary: #0080ff;
+  --transp: #a4a4a430;
+  --sec-color: #81ecec;
+  --font-color: #131313;
+  --grey-color: #eeeeee;
+  --main-color: #ffffff;
+  --transp-x2: #ffffffcc;
+  --transp-x3: #ffffff70;
+  --border-active: #1c1c1c;
+  --primary-transp: #0080ff75;
+  --font-color-transp: #303030;
+  --main-color-transp: #ffffff30;
 }
 
-// [theme='blue'] {
-//   --primary: #2e86de;
-//   --main-color: #81ecec;
-//   --sec-color: #fff;
-//   --font-color: #242424;
-//   --font-color-transp2: #2424241b;
-//   --font-color-transp3: #2424242a;
-//   --font-color-transp4: #2424243a;
-// }
-
 [theme='dark'] {
-  --primary: #2e86de;
-  // --primary: #00fbff;
-  --primary-transp: #2e86debb;
-  // --main-color: #101010;
-  --main-color: #131313;
-  // --main-color-transp: #10101030;
-  --main-color-transp: #13131330;
-  --sec-color: #81ecec;
   --font-color: #fff;
-  --grey-color: #eeeeee;
-  --font-color-transp: #bbbbbb;
+  --primary: #2e86de;
   --transp: #ffffff30;
+  --border: #ffffff10;
+  --sec-color: #81ecec;
+  --main-color: #131313;
+  --grey-color: #eeeeee;
   --transp-x2: #ffffff15;
   --transp-x3: #ffffff10;
+  --border-active: #ffffff15;
+  --primary-transp: #2e86debb;
+  --font-color-transp: #bbbbbb;
+  --main-color-transp: #13131330;
 }
 
 // body-bg-patterns
@@ -43,27 +38,57 @@
 }
 
 [bgPattern='diamond'] {
-  --bg-pattern: url('../assets/bgPatterns/diamond.svg');
+  &[theme='light'] {
+    --bg-pattern: url('../assets/bgPatterns/light/diamond.svg');
+  }
+  &[theme='dark'] {
+    --bg-pattern: url('../assets/bgPatterns/dark/diamond.svg');
+  }
 }
 
 [bgPattern='skull'] {
-  --bg-pattern: url('../assets/bgPatterns/skull.svg');
+  &[theme='light'] {
+    --bg-pattern: url('../assets/bgPatterns/light/skull.svg');
+  }
+  &[theme='dark'] {
+    --bg-pattern: url('../assets/bgPatterns/dark/skull.svg');
+  }
 }
 
 [bgPattern='circuit-board'] {
-  --bg-pattern: url('../assets/bgPatterns/circuit-board.svg');
+  &[theme='light'] {
+    --bg-pattern: url('../assets/bgPatterns/light/circuit-board.svg');
+  }
+  &[theme='dark'] {
+    --bg-pattern: url('../assets/bgPatterns/dark/circuit-board.svg');
+  }
 }
 
 [bgPattern='tic-tac-toe'] {
-  --bg-pattern: url('../assets/bgPatterns/tic-tac-toe.svg');
+  &[theme='light'] {
+    --bg-pattern: url('../assets/bgPatterns/light/tic-tac-toe.svg');
+  }
+  &[theme='dark'] {
+    --bg-pattern: url('../assets/bgPatterns/dark/tic-tac-toe.svg');
+  }
 }
 
 [bgPattern='floating-cogs'] {
-  --bg-pattern: url('../assets/bgPatterns/floating-cogs.svg');
+  &[theme='light'] {
+    --bg-pattern: url('../assets/bgPatterns/light/floating-cogs.svg');
+  }
+  &[theme='dark'] {
+    --bg-pattern: url('../assets/bgPatterns/dark/floating-cogs.svg');
+  }
 }
 
 [bgPattern='i-like-food'] {
-  --bg-pattern: url('../assets/bgPatterns/i-like-food.svg');
+  &[theme='light'] {
+    --bg-pattern: url('../assets/bgPatterns/light/i-like-food.svg');
+  }
+  &[theme='dark'] {
+    --bg-pattern: url('../assets/bgPatterns/dark/i-like-food.svg');
+  }
 }
 
 // diagram-themes

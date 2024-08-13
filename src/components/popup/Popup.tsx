@@ -5,6 +5,7 @@ import delIcon from '../../assets/icons/delIcon';
 import backIcon from '../../assets/icons/backIcon';
 import closeIcon from '../../assets/icons/closeIcon';
 import { FC, ReactNode, useEffect, useRef } from 'react';
+import Loader from '../loader/Loader';
 
 type PopupProps = {
   title?: string;
@@ -12,6 +13,7 @@ type PopupProps = {
   message?: string;
   del?: () => void;
   back?: () => void;
+  loading?: boolean;
   close?: () => void;
   children: ReactNode;
   windowClass?: string;
@@ -24,6 +26,7 @@ const Popup: FC<PopupProps> = ({
   back,
   close,
   message,
+  loading,
   children,
   title = '',
   windowClass = '',
@@ -56,7 +59,7 @@ const Popup: FC<PopupProps> = ({
   }, [close]);
 
   return (
-    <div className={s.popup + ' popup'}>
+    <div className={s.popup + ' popup ' + (loading ? s.loading : '')}>
       <div
         ref={popupRef}
         className={
@@ -86,6 +89,7 @@ const Popup: FC<PopupProps> = ({
             <p>{message}</p>
           </div>
         )}
+        {loading && <Loader />}
       </div>
     </div>
   );

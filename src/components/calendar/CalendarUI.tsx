@@ -1,58 +1,46 @@
+import {
+  DataDayType,
+  ListItemType,
+  CalendarTaskType,
+  CalendarDayDataType,
+} from '../../types/types';
 import _ from 'lodash';
 import s from './CalendarUI.module.scss';
 import getDayName from '../../utils/getDayName';
 import { FC, useEffect, useState } from 'react';
-
-type dayCellType = {
-  id: number;
-  date?: Date;
-};
+import noteIcon from '../../assets/icons/noteIcon';
+import tasksIcon from '../../assets/icons/tasksIcon';
+import deadlineIcon from '../../assets/icons/deadlineIcon';
+import getDaysListInMonth from '../../utils/getDaysListInMonth';
 
 type CalendarUIType = {
   date: Date;
   activeDate: Date;
   className?: string;
-  dayClick: (day: dayCellType) => void;
+  tasks: CalendarTaskType[];
+  deadlines: ListItemType[];
+  dayDataList: CalendarDayDataType[];
+  // dayDataList: CalendarNoteType [];
+  dayClick: (day: DataDayType) => void;
 };
 
 const CalendarUI: FC<CalendarUIType> = ({
   date,
+  tasks,
   dayClick,
+  deadlines,
   activeDate,
+  dayDataList,
   className = '',
 }) => {
-  const [dayList, setDayList] = useState<dayCellType[]>([]);
+  const [dayList, setDayList] = useState<DataDayType[]>([]);
   const [activeColumn, setActiveColumn] = useState<number>(-1);
 
+  // set day list
   useEffect(() => {
-    console.log(date);
-    const initDate = new Date(date);
-    const upDate = new Date(date);
-
-    upDate.setDate(1);
-    const startDay = date.getDay();
-
-    upDate.setDate(32);
-    const endDay = 32 - upDate.getDate();
-
-    const dayArr = [];
-
-    let k = 0;
-    for (let i of _.range(42)) {
-      if (startDay === 0 && i < 6) {
-        dayArr.push({ id: i });
-      } else if (i + 1 < startDay || k >= endDay) {
-        dayArr.push({ id: i });
-      } else {
-        k += 1;
-        dayArr.push({
-          id: i,
-          date: new Date(initDate.setDate(k)),
-        });
-      }
-    }
-    setDayList(dayArr);
-  }, [date]);
+    const dayList = getDaysListInMonth(date, deadlines, dayDataList, tasks);
+    setDayList([...dayList]);
+  }, [date, deadlines, dayDataList, tasks]);
 
   const cellClass = (i: number, date: Date | undefined) => {
     let className = '';
@@ -62,7 +50,7 @@ const CalendarUI: FC<CalendarUIType> = ({
     return className;
   };
 
-  const dayClass = (day: dayCellType) => {
+  const dayClass = (day: DataDayType) => {
     if (!day.date) return '';
     if (+day.date === +activeDate) {
       return ' ' + s.active;
@@ -89,8 +77,15 @@ const CalendarUI: FC<CalendarUIType> = ({
     return className;
   };
 
-  // console.log(dayList);
-  // selectedItem
+  const dayTasksCompletedPercent = (day: DataDayType) => {
+    if (day.dayData?.completedDayTaskIds.length && day.tasks?.length) {
+      return `calc(${
+        (day.dayData.completedDayTaskIds.length / day.tasks.length) * 100 + '%'
+      } + 4px)`;
+    } else {
+      return '';
+    }
+  };
 
   return (
     <div className={s.calendarWrap + ' ' + className}>
@@ -122,6 +117,31 @@ const CalendarUI: FC<CalendarUIType> = ({
                 }}
               >
                 {day.date ? day.date.getDate() : ''}
+                <div
+                  style={{ width: dayTasksCompletedPercent(day) }}
+                  className={s.filler}
+                ></div>
+                <div className={s.markers}>
+                  {day.deadlines && (
+                    <div className={s.markerIcon + ' ' + s.deadline}>
+                      {deadlineIcon}
+                      <p className={s.count}>{day.deadlines.length}</p>
+                    </div>
+                  )}
+                  {day.dayData?.note && (
+                    <div className={s.markerIcon + ' ' + s.note}>
+                      {noteIcon}
+                    </div>
+                  )}
+                  {!!day.tasks?.length && (
+                    <ul>
+                      <div className={s.markerIcon + ' ' + s.task}>
+                        {tasksIcon}
+                        <p className={s.count}>{day.tasks.length}</p>
+                      </div>
+                    </ul>
+                  )}
+                </div>
               </li>
             );
           })}

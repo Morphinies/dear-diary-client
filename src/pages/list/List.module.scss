@@ -3,7 +3,7 @@
 .inputList {
   gap: 1rem;
   display: flex;
-  margin-top: 2rem;
+  // margin-top: 2rem;
   flex-direction: column;
 }
 
@@ -25,4 +25,10 @@ h1 {
 
 .list {
   flex: 1;
+}
+
+@media (max-width: 700px) {
+  .popupWindow {
+    justify-content: flex-start;
+  }
 }

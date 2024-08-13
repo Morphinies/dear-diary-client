@@ -6,7 +6,6 @@ import {
   DiagramPieChartDataType,
   TransformDiagramDataItem,
 } from '../../../types/types';
-import _ from 'lodash';
 import api from '../../../api';
 import s from '../Diagram.module.scss';
 import DiagramPieChart from './DiagramPieChart';
@@ -25,7 +24,7 @@ const DiagramData: FC<DiagramDataType> = ({
   updateCategoryList,
   changeActiveSettings,
 }) => {
-  const [loading, setloading] = useState(true);
+  // const [loading, setloading] = useState(true);
   const [activeDataPeriod, setActiveDataPeriod] =
     useState<DiagramDataPeriodType>({
       startDate: 0,
@@ -221,18 +220,18 @@ const DiagramData: FC<DiagramDataType> = ({
   };
 
   const getDataList = async (chapterId: string, categoryId: string) => {
-    setloading(true);
+    // setloading(true);
     const data = await api.diagram.getDataList(chapterId, categoryId);
     if (data) {
       setDataList([...data]);
     } else {
       console.log('Не удалось загрузить данные');
     }
-    setloading(false);
+    // setloading(false);
   };
 
   const getDefDataList = async (chapterId: string, categoryId: string) => {
-    setloading(true);
+    // setloading(true);
     const data = await api.diagram.getDataList(chapterId, categoryId);
     if (data) {
       const transformedData = getTransformDataList(data);
@@ -240,7 +239,7 @@ const DiagramData: FC<DiagramDataType> = ({
     } else {
       console.log('Не удалось загрузить данные');
     }
-    setloading(false);
+    // setloading(false);
   };
 
   const delDataItem = async (id: string) => {
@@ -328,6 +327,7 @@ const DiagramData: FC<DiagramDataType> = ({
     // } else {
     //   // setDataItem((prev) => ({ ...prev, num: 1 }));
     // }
+    // eslint-disable-next-line
   }, [dataList, activeDataPeriod, activeSettings.chapter]);
 
   const changeActiveCategory = (categoryId: string) => {
@@ -355,6 +355,7 @@ const DiagramData: FC<DiagramDataType> = ({
     if (settingsList.categories.length >= 0) {
       getDefDataList(activeSettings.chapter.id, '1');
     }
+    // eslint-disable-next-line
   }, [settingsList.categories]);
 
   return (

@@ -12,6 +12,95 @@
   display: flex;
 }
 
+.dayList {
+  gap: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); //44px
+}
+
+.taskListEmpty,
+.taskListWrap {
+  flex: 1;
+}
+
+.taskCheckbox {
+  width: 100%;
+}
+
+.popupTextarea {
+  flex: unset;
+  max-height: 100px;
+}
+
+.taskListWrap {
+  gap: 0.5rem;
+  display: flex;
+  margin: 1rem 0;
+  overflow: auto;
+  @extend .scroll;
+  flex-direction: column;
+  li {
+    display: flex;
+    align-items: center;
+    border-radius: $rad;
+    justify-content: space-between;
+  }
+}
+
+.btnDelTask {
+  padding: 0.25rem 1rem;
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  path {
+    stroke: var(--font-color-transp);
+  }
+}
+
+.taskForm {
+  gap: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.taskListEmpty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  p {
+    color: var(--font-color-transp);
+  }
+}
+
+.dayItem {
+  width: 100%;
+  display: flex;
+  padding: 0.5rem;
+  cursor: pointer;
+  line-height: 100%;
+  text-align: center;
+  align-items: center;
+  border-radius: $rad;
+  justify-content: center;
+  border: 1px solid var(--border);
+  &.active {
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+  &.btn {
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
+    &.empty {
+      svg {
+        opacity: 0;
+      }
+    }
+  }
+}
+
 .noteList {
   flex: 1;
   gap: 0.25rem;
@@ -24,6 +113,10 @@
 
 .noteNumb {
   min-width: 30px;
+}
+
+.selectMonth div {
+  left: unset;
 }
 
 .noteItem {
@@ -61,8 +154,109 @@
   }
 }
 
+.popup {
+  gap: 1rem;
+  height: 500px;
+  &.tasks {
+    overflow: hidden;
+  }
+}
+
+.popupContent {
+  flex: 1;
+  gap: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  &.task {
+    overflow: hidden;
+  }
+}
+
+.emptyTextWrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--font-color-transp);
+}
+
+// .subTitle {
+//   font-weight: 500;
+//   font-size: 1.1rem;
+//   color: var(--font-color-transp);
+// }
+
+.checkboxList {
+  gap: 0.5rem;
+  display: flex;
+  margin-top: 0.25rem;
+  flex-direction: column;
+}
+
+.checkboxItem {
+  display: flex;
+  position: relative;
+  border-radius: $rad;
+  align-items: center;
+  justify-content: space-between;
+  .checkbox {
+    flex: 1;
+  }
+  .checkboxIcon {
+    top: 50%;
+    width: 1rem;
+    height: 1rem;
+    right: 0.5rem;
+    position: absolute;
+    transform: translateY(-50%);
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+    polygon,
+    path {
+      fill: $danger;
+    }
+  }
+}
+
+.checkboxTitle {
+  margin-top: 0.5rem;
+  font-size: 1.125rem;
+  color: var(--font-color-transp);
+}
+
+.taskListEmpty {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media (hover) {
   .noteItem:hover {
     background-color: #ffffff30;
+  }
+  .dayItem:hover {
+    background-color: var(--transp);
+  }
+  .checkboxItem:hover,
+  .taskListWrap li:hover {
+    background-color: var(--transp-x3);
+  }
+  .btnDelTask:hover {
+    path {
+      stroke: var(--font-color);
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .popup {
+    gap: 2rem;
+    height: auto;
+  }
+  .popupTextarea {
+    max-height: 150px;
   }
 }

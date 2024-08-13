@@ -84,7 +84,7 @@ const EditMenuItemPopup = ({
     if (!jsonEqual(menuItem, menuData)) {
       setMenuData(menuItem);
     }
-  }, [menuItem]);
+  }, [menuItem, menuData]);
 
   // new ver
 

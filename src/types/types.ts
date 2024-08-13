@@ -1,3 +1,8 @@
+// common
+export type ErrorType = {
+  error: string;
+};
+
 // notes
 export type dayNotesType = {
   id: string;
@@ -335,4 +340,111 @@ export type TransformDiagramDataItem = {
 export type DiagramPieChartDataType = {
   category: string;
   value: number;
+};
+
+// Calendar
+
+export type CalendarDataType = {
+  id: string;
+  menuId: string;
+  deadlineIds: string[];
+  deadlines: ListItemType[];
+};
+
+export type CalendarNoteType = {
+  id: string;
+  date: number;
+  note: string;
+};
+
+export type CalendarTaskType = {
+  id: string;
+  text: string;
+  dayIds: number[];
+};
+
+export type CalendarEditTaskType = {
+  id?: string;
+  text: string;
+  menuId?: string;
+  dayIds?: number[];
+};
+
+export type EditCalendarDataType = {
+  id?: string;
+  menuId?: string;
+  deadlineIds: string[];
+  tasks: CalendarTaskType[];
+  deadlines: ListItemType[];
+  dayDataList: CalendarDayDataType[];
+};
+
+export type DataDayType = {
+  id: number;
+  date?: Date;
+  tasks?: CalendarTaskType[];
+  deadlines?: ListItemType[];
+  dayData?: CalendarDayDataType;
+};
+
+export type CalendarDayDataType = {
+  id: string;
+  date: number;
+  note: string;
+  completedDayTaskIds: string[];
+};
+
+export type DataEditDayType = {
+  id: number;
+  date: number;
+  note: string;
+  completedDayTaskIds: string[];
+  completedDeadlines: string[];
+};
+
+// graph
+
+export type GraphDataEditItemType = {
+  id?: string;
+  desc: string;
+  date: number;
+  value: number;
+  chapterId: string;
+};
+
+export type GraphDataItemType = {
+  id: string;
+  desc: string;
+  date: number;
+  value: number;
+  chapterId: string;
+};
+
+export type GraphDataType = {
+  name: string;
+  value: number;
+};
+
+export type GraphSettingsListType = {
+  chapters: {
+    id: string;
+    name: string;
+  }[];
+  periods: {
+    id: number;
+    name: string;
+  }[];
+  views: DiagramActiveViewType[];
+};
+
+export type GraphActiveSettingsType = {
+  chapter: {
+    id: string;
+    name: string;
+  };
+  period: {
+    id: number;
+    name: string;
+  };
+  view: DiagramActiveViewType;
 };

@@ -1,4 +1,11 @@
-// import fixBody from './fixBody';
+type listAnimationType = {
+  id: string;
+  open: boolean;
+  minRow?: number;
+  padding: number;
+  extraPx?: number;
+  isHorizontal?: boolean;
+};
 
 const listAnimation = ({
   id,
@@ -7,7 +14,7 @@ const listAnimation = ({
   padding = 10,
   extraPx = 0,
   isHorizontal = false,
-}) => {
+}: listAnimationType) => {
   const list = document.getElementById(id);
   if (!list) return;
   if (open) {
@@ -24,11 +31,12 @@ const listAnimation = ({
   } else {
     let closeVar = 0;
     if (minRow) {
-      if (!list.firstElementChild || !list.querySelector('li')) return;
+      const listEl = list.querySelector('li');
+      if (!list.firstElementChild || !listEl) return;
       const listStyles = window.getComputedStyle(list.firstElementChild);
       closeVar =
         (minRow - 1) * parseInt(listStyles.gap) +
-        list.querySelector('li').offsetHeight * minRow +
+        listEl.offsetHeight * minRow +
         1;
     }
     list.classList.remove('opened');

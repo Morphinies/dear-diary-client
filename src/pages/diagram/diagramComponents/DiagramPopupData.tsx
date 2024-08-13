@@ -8,7 +8,6 @@ import s from '../Diagram.module.scss';
 import Popup from '../../../components/popup/Popup';
 import Input from '../../../components/Input/Input';
 import Select from '../../../components/select/Select';
-import Button from '../../../components/button/Button';
 import Textarea from '../../../components/Input/Textarea';
 import DiagramPopupCategory from './DiagramPopupCategory';
 
@@ -52,6 +51,7 @@ const DiagramPopupData: FC<DiagramPopupDataType> = ({
     <Popup
       close={close}
       ok={() => save(data)}
+      windowClass={s.popupWindow}
       title={`Статья "${activeSettings.chapter.name}"`}
       del={data.id ? () => data.id && handleDel(data.id) : undefined}
     >

@@ -1,4 +1,4 @@
-const jsonEqual = (item1, item2) => {
+const jsonEqual = (item1: any, item2: any) => {
   return JSON.stringify(item1) === JSON.stringify(item2);
 };
 

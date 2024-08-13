@@ -16,7 +16,7 @@ import Header from '../../components/header/Header';
 
 const SList = () => {
   const { menuId } = useParams();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [menu, setMenu] = useState<MenuItemType>();
   const [list, setList] = useState<SListItemType[]>([]);
   const [editedNote, setEditedNote] = useState<SListItemEditType>();
@@ -44,14 +44,13 @@ const SList = () => {
 
   useEffect(() => {
     getNotes();
+    // eslint-disable-next-line
   }, []);
 
   const save = async () => {
     if (editedNote) {
       if (!editedNote.desc && !editedNote.text) return;
-      console.log('editedNote', editedNote);
       const updatedNote = await api.sList.update(editedNote);
-      console.log(updatedNote);
       if (updatedNote) {
         const updatedNoteIndex = list.findIndex(
           (note) => note.id === updatedNote.id
@@ -132,7 +131,8 @@ const SList = () => {
                 onClick={() => addItem()}
                 className={s.noteItem + ' ' + s.btnAdd}
               >
-                {plusIcon}
+                <div className={s.iconWrap}>{plusIcon}</div>
+                {/* {plusIcon} */}
               </button>
               {sortedNotes.map((note, i) => (
                 <NotesItem key={i} setEditedNote={setEditedNote} note={note} />

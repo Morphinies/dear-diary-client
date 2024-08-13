@@ -19,13 +19,15 @@ const NotesEditPopup = ({
   editedNote,
   changeNote,
 }: notesEditPopupType) => {
+  console.log(editedNote);
   return (
     <Popup
       ok={save}
       close={closePopup}
       windowClass={s.popupWindow}
+      contentClass={s.popupWindowContent}
       del={editedNote.id ? delNote : undefined}
-      //   title={`Заметки - ${getFullDate(date)}`}
+      title={editedNote.id ? 'Редактирование' : 'Редактирование'}
     >
       <div className={s.notesPopupContent}>
         <Input

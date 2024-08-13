@@ -8,6 +8,8 @@ import _ from 'lodash';
 type CalendarSettingsType = {
   date: Date;
   nowDate: Date;
+  editTasks: () => void;
+  editDeadlines: () => void;
   setDate: (val: Date) => void;
 };
 
@@ -16,7 +18,13 @@ type MonthItemType = {
   name: string;
 };
 
-const CalendarSettings = ({ date, nowDate, setDate }: CalendarSettingsType) => {
+const CalendarSettings = ({
+  date,
+  nowDate,
+  setDate,
+  editTasks,
+  editDeadlines,
+}: CalendarSettingsType) => {
   const [yearList, setYearList] = useState<number[]>([]);
   const [monthList, setMonthList] = useState<MonthItemType[]>([]);
 
@@ -58,10 +66,16 @@ const CalendarSettings = ({ date, nowDate, setDate }: CalendarSettingsType) => {
     <div className={s.settings}>
       <div className={s.left}>
         <Button
-          text="Данные"
-          className={s.btnReset}
+          text="Дедлайны"
+          // className={s.btnReset}
           title="Настроить списки"
-          handleClick={() => console.log('')}
+          handleClick={editDeadlines}
+        />
+        <Button
+          text="Задачи"
+          // className={s.btnReset}
+          title="Настроить задачи"
+          handleClick={editTasks}
         />
       </div>
       <div className={s.right}>

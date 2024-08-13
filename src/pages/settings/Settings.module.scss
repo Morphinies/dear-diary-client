@@ -1,6 +1,11 @@
 .settings {
   gap: 1rem;
   display: flex;
-  margin-top: 2rem;
   flex-direction: column;
+}
+
+@media (max-width: 700px) {
+  .settings {
+    gap: 0.5rem;
+  }
 }

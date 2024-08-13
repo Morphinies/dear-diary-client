@@ -10,22 +10,6 @@ const Endpoints = {
     REGISTR: URI + 'auth/registration',
     RESEND_LINK: URI + 'auth/resend_link',
   },
-  NOTES: {
-    DEL_NOTE: URI + 'notes/note_del',
-    UPDATE_NOTE: URI + 'notes/note_update',
-    GET_NOTE_LIST: URI + 'notes/note_list',
-    GET_DAY_NOTES: URI + 'notes/day_notes',
-    EDIT_DAY_NOTES: URI + 'notes/day_notes',
-    GET_MONTH_NOTES: URI + 'notes/month_notes',
-  },
-  FINANCE: {
-    DEL_TRANSACTION: URI + 'finance/trans_del',
-    ADD_TRANSACTION: URI + 'finance/trans_update',
-    GET_TRANSACTION_LIST: URI + 'finance/trans_list',
-    DEL_CATEGORY: URI + 'finance/trans_category_del',
-    ADD_CATEGORY: URI + 'finance/trans_category_update',
-    GET_CATEGORY_LIST: URI + 'finance/trans_category_list',
-  },
   DIAGRAM: {
     DEL_DATA_ITEM: URI + 'diagram/del_item',
     GET_DATA_LIST: URI + 'diagram/data_list',
@@ -39,11 +23,21 @@ const Endpoints = {
     EDIT_CHAPTER: URI + 'diagram/update_chapter',
     GET_CHAPTER_LIST: URI + 'diagram/chapter_list',
   },
+  GRAPH: {
+    DEL_DATA_ITEM: URI + 'graph/del_item',
+    GET_DATA_LIST: URI + 'graph/data_list',
+    EDIT_DATA_ITEM: URI + 'graph/update_item',
+
+    DEL_CHAPTER: URI + 'graph/del_chapter',
+    EDIT_CHAPTER: URI + 'graph/update_chapter',
+    GET_CHAPTER_LIST: URI + 'graph/chapter_list',
+  },
   LIST: {
     GET_LIST: URI + 'list',
     UPDATE_ITEM: URI + 'list/item',
     DELETE_ITEM: URI + 'list/item',
     UPDATE_ITEM_SORT: URI + 'list/item_sort',
+    COMPLETE_ITEM: URI + 'list/item_complete',
   },
   S_LIST: {
     GET_LIST: URI + 's_list',
@@ -59,6 +53,13 @@ const Endpoints = {
     UPDATE: URI + 'menu',
     GET_ITEM: URI + 'menu',
     GET_LIST: URI + 'menu/list',
+  },
+  CALENDAR: {
+    DEL: URI + 'calendar/data',
+    UPDATE: URI + 'calendar/data',
+    GET_DATA: URI + 'calendar/data',
+    UPDATE_DAY: URI + 'calendar/day_data',
+    UPDATE_DAY_TASK: URI + 'calendar/day_task',
   },
 };
 
